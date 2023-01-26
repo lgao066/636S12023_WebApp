@@ -6,6 +6,13 @@ Web Application Project Summer School, 2022
 This is readme
 
 Steps:
+1. Create virtual environment using the following commands
+        py -3 -m venv .venv
+        .venv\Scripts\activate.bat
+2. Install the packages
+        pip install -r requirements.txt
+
+Steps:
 
 Create virtual environment using the following commands py -3 -m venv .venv .venv\Scripts\activate.bat
 Install the packages pip install -r requirements.txt
