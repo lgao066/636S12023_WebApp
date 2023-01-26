@@ -8,7 +8,7 @@ This is readme
 Steps:
 1. Create virtual environment using the following commands
         py -3 -m venv .venv
-        .venv\Scripts\activate.bat
+        source librarywebapp\\.venv\\Scripts\\activate
 2. Install the packages
         pip install -r requirements.txt
 
