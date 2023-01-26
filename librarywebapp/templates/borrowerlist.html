@@ -1,0 +1,44 @@
+<!-- Name:       Li Gao  -->
+<!-- Student ID: 1155084 -->
+
+{% extends "base.html" %}
+
+{% block title %}
+Borrower List -
+{% endblock %}
+
+{% block content %}
+
+<!-- borrowerlist is the variable passed in containing list of loans -->
+
+<h3 style="color:SlateBlue;">Borrower List</h3>
+<h4 style="color:SlateBlue;">A list of all borrowers in our library</h4>
+<hr />
+
+<!-- 2. List all borrowers in a table -->
+<table style="width:90%; border: 1px solid black" class ="table table-striped table-hover">
+    <thead style="background-color: #96D4D4;">
+        <tr>
+            <th scope="col" style="width:10%">Borrowers ID</th>
+            <th scope="col" style="width:10%">First Name</th>
+            <th scope="col" style="width:10%">Family Name</th>
+            <th scope="col" style="width:10%">Date of Birth</th>
+            <th scope="col" style="width:10%">House Number</th>
+            <th scope="col" style="width:13%">Street</th>
+            <th scope="col" style="width:12%">Town</th>
+            <th scope="col" style="width:10%">City</th>
+            <th scope="col" style="width:5%">Postcode</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for borrower in borrowerlist %}
+        <tr>
+            {% for entry in borrower %}
+            <td>{{entry}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
