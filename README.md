@@ -12,6 +12,8 @@ Steps:
 2. Install the packages
         pip install -r requirements.txt
 
+3. Use the virtualenv as python interpreter (otherwise not able to pick up the packages installed inside this virtualenv)
+
 Steps:
 
 Create virtual environment using the following commands py -3 -m venv .venv .venv\Scripts\activate.bat
