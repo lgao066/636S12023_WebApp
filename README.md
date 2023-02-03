@@ -34,3 +34,8 @@ First interface (public)
 Second interface (staff)
 
 Added navigation panel for public and staff 04/02/2023
+
+Code management - Code is stored in different locations
+1. Local machine: where the code development mainly happens
+2. GitHub Repo: where the code is mainly stored and distributed
+3. Pythonanywhere: production envrionment, code stored there is stable; DB connection file is different from GitHub
