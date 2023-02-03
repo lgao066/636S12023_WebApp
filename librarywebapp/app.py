@@ -24,8 +24,12 @@ def getCursor():
     return dbconn
 
 @app.route("/")
-def home():
+def public_home():
     return render_template("base.html")
+
+@app.route("/staff")
+def staff_home():
+    return render_template("staffbase.html")
 
 @app.route("/listbooks")
 def listbooks():
@@ -35,7 +39,7 @@ def listbooks():
     print(bookList)
     return render_template("booklist.html", booklist = bookList)    
 
-@app.route("/loanbook")
+@app.route("/staff/loanbook")
 def loanbook():
     todaydate = datetime.now().date()
     connection = getCursor()
@@ -48,7 +52,7 @@ inner join books on books.bookid = bookcopies.bookid
     bookList = connection.fetchall()
     return render_template("addloan.html", loandate = todaydate,borrowers = borrowerList, books= bookList)
 
-@app.route("/loan/add", methods=["POST"])
+@app.route("/staff/loan/add", methods=["POST"])
 def addloan():
     borrowerid = request.form.get('borrower')
     bookid = request.form.get('book')
@@ -57,14 +61,14 @@ def addloan():
     cur.execute("INSERT INTO loans (borrowerid, bookcopyid, loandate, returned) VALUES(%s,%s,%s,0);",(borrowerid, bookid, str(loandate),))
     return redirect("/currentloans")
 
-@app.route("/listborrowers")
+@app.route("/staff/listborrowers")
 def listborrowers():
     connection = getCursor()
     connection.execute("SELECT * FROM borrowers;")
     borrowerList = connection.fetchall()
     return render_template("borrowerlist.html", borrowerlist = borrowerList)
 
-@app.route("/currentloans")
+@app.route("/staff/currentloans")
 def currentloans():
     connection = getCursor()
     sql=""" select br.borrowerid, br.firstname, br.familyname,  

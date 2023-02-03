@@ -25,3 +25,10 @@ Include a brief project report: • Outlining the structure of your solution (ro
 • A discussion that outlines what changes would be required if your application was to support multiple library branches. This should include: o Changes required to database tables (new tables and modifications to existing tables) o Changes required to the design and implementation of your web app. o (Do not implement these changes in your app.)
 
 This report must be created using GitHub Markdown and saved in the README.md file of your GitHub repository.
+
+First interface (public)
+        [Done] List all books available in the library at the /booklist route
+        Search Books - Search books by title and/or author
+        See the availability of all copies of a book
+        
+Second interface (staff)
