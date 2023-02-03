@@ -32,3 +32,5 @@ First interface (public)
         See the availability of all copies of a book
         
 Second interface (staff)
+
+Added navigation panel for public and staff 04/02/2023
