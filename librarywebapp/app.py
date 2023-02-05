@@ -23,6 +23,19 @@ def getCursor():
     dbconn = connection.cursor()
     return dbconn
 
+#region SQL Queries
+search_avaiable_books = '''SELECT bookcopies.bookcopyid, books.booktitle, books.author, format, 
+                            IF(min(returned)=1, "On Loan", "Available")  AS returned, 
+                            DATE_ADD(max(loandate), INTERVAL 28 DAY)  AS duedate
+                            FROM bookcopies
+                            inner join books on books.bookid = bookcopies.bookid
+                            left join loans on bookcopies.bookcopyid = loans.bookcopyid
+                            group by bookcopies.bookcopyid
+                            having books.booktitle like '%%' and books.author like '%%'
+                            order by books.booktitle asc;'''
+#endregion
+
+#region App routing
 @app.route("/")
 def public_home():
     return render_template("base.html")
@@ -30,6 +43,16 @@ def public_home():
 @app.route("/staff")
 def staff_home():
     return render_template("staffbase.html")
+
+@app.route("/search")
+def searchbooks():
+    connection = getCursor()
+    #author = request.form.get('author')
+    #book = request.form.get('book')
+    connection.execute(search_avaiable_books)
+    bookList = connection.fetchall()
+    print(bookList)
+    return render_template("searchbook.html", booklist = bookList)  
 
 @app.route("/listbooks")
 def listbooks():
@@ -82,6 +105,9 @@ def currentloans():
     connection.execute(sql)
     loanList = connection.fetchall()
     return render_template("currentloans.html", loanlist = loanList)
+#endregion
+
+
 
 if __name__=="__app__":
     app.run(debug=True)

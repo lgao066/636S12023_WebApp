@@ -39,3 +39,13 @@ Code management - Code is stored in different locations
 1. Local machine: where the code development mainly happens
 2. GitHub Repo: where the code is mainly stored and distributed
 3. Pythonanywhere: production envrionment, code stored there is stable; DB connection file is different from GitHub
+
+Assumptions:
+
+1. Physical copies: Hardcover, Paperback, Illustrated; Digital copies (eBooks, Audio Books).
+2. Users cannot add a loan for a non-digital copy when another borrower still has that copy (I cannot borrow a particular paperback when another borrower still has it at her house).
+3. Users can add a loan for a digital copy any time (regardless of whether it is marked as returned or not returned)
+4. All loans have a due date, and can be 'returned', regardless of copy format.
+
+Questions:
+When we are searching the catalogue and returning the loan information, it is possible for each of digital copies having mutiple loan records (given the they can be borrowed while on loan). Should we display all the loan records for digital copies or just the most recent one?

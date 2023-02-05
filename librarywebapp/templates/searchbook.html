@@ -1,0 +1,45 @@
+<!-- Name:       Li Gao  -->
+<!-- Student ID: 1155084 -->
+
+{% extends "base.html" %}
+
+{% block title %}
+Search Book -
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+<h3 style="color:SlateBlue;">Available Book List</h3>
+<h4 style="color:SlateBlue;">A list of all books in our collection</h4>
+<hr />
+<!-- 1. Each row is striped and hoverable-->
+<table style="width:100%; border: 1px solid black;" class ="table table-striped table-hover">
+    <thead style="background-color: #96D4D4;">
+        <tr>
+            <th scope="col">BookCopyID</th>
+            <th scope="col" style="width:50%">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Format</th>
+            <th scope="col">Availability</th>
+            <th scope="col">Due Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in booklist %}
+        <tr>
+            <td>{{book[0]}}</td>
+            <td>{{book[1]}}</td>
+            <td>{{book[2]}}</td>
+            <td>{{book[3]}}</td>
+            <td>{{book[4]}}</td>
+            <td>{{book[5]}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}
