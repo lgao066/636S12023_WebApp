@@ -15,12 +15,42 @@ Search Book -
 <h3 style="color:SlateBlue;">Available Book List</h3>
 <h4 style="color:SlateBlue;">A list of all books in our collection</h4>
 <hr />
+
+<form id="searchbook" name="searchbook" action="/loan/add" method="post">
+    <label for="book">Indicated book to borrow</label>    
+    <input name="book" id="book"/><br /> <br />
+
+    <label for="author">Indicated author to borrow</label>    
+    <input name="author" id="author"/>
+
+    <!-- URL for submission (action) of form should be loan/add -->
+    <button id="search" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white">Search</button>
+</form>
+
+<script>
+    const btn = document.querySelector('#search');
+    const auth = document.querySelector('#author')
+    const book = document.querySelector('#book')
+    btn.onclick = (event) => { 
+        // show the selected index
+        if(auth.value == "" && auth.value == "")
+        {
+            event.preventDefault();
+            alert("Oops! Please enter an author and/or a book name and try again!");
+        }
+        else
+        {
+            alert("Cool!");
+        }
+    };
+</script>
+
 <!-- 1. Each row is striped and hoverable-->
-<table style="width:100%; border: 1px solid black;" class ="table table-striped table-hover">
+<table style="width:90%; border: 1px solid black;" class ="table table-striped table-hover">
     <thead style="background-color: #96D4D4;">
         <tr>
             <th scope="col">BookCopyID</th>
-            <th scope="col" style="width:50%">Title</th>
+            <th scope="col" style="width:50%">Book Title</th>
             <th scope="col">Author</th>
             <th scope="col">Format</th>
             <th scope="col">Availability</th>
@@ -34,8 +64,17 @@ Search Book -
             <td>{{book[1]}}</td>
             <td>{{book[2]}}</td>
             <td>{{book[3]}}</td>
+            {% if book[3] == "eBook" or book[3] == "Audio Book"%}
+            <td>Available</td>
+            {% else %}
             <td>{{book[4]}}</td>
+            {% endif %}
+
+            {% if (book[3] == "eBook" or book[3] == "Audio Book") or book[4] == "Available" %}
+            <td></td>
+            {% else %}
             <td>{{book[5]}}</td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>

@@ -47,12 +47,22 @@ def staff_home():
 @app.route("/search")
 def searchbooks():
     connection = getCursor()
-    #author = request.form.get('author')
-    #book = request.form.get('book')
+    #str1 = search_avaiable_books
+    #print(str1)
+    #str = search_avaiable_books, ("","",)
+    #print(str)
     connection.execute(search_avaiable_books)
     bookList = connection.fetchall()
     print(bookList)
-    return render_template("searchbook.html", booklist = bookList)  
+    return render_template("searchbook.html", booklist = bookList)
+
+@app.route("/search", methods=["POST"])
+def searchbooks_post():
+    author = request.form.get('author')
+    book = request.form.get('book')
+    cur = getCursor()
+    cur.execute(search_avaiable_books,(author, book,))
+    return redirect("/search")
 
 @app.route("/listbooks")
 def listbooks():
