@@ -6,10 +6,13 @@ Web Application Project Summer School, 2022
 This is readme
 
 Steps:
+0. Navigate to folder 636S12023_WebApp
+
 1. Create virtual environment using the following commands
         py -3 -m venv .venv
-        source librarywebapp\\.venv\\Scripts\\activate
+        source librarywebapp\\.venv\\Scripts\\activate or navigate to .venv folder and run Scripts\\activate
 2. Install the packages
+        navigate to the main folder 636S12023_WebApp, and run the following command
         pip install -r requirements.txt
 
 3. Use the virtualenv as python interpreter (otherwise not able to pick up the packages installed inside this virtualenv)
@@ -49,3 +52,10 @@ Assumptions:
 
 Questions:
 When we are searching the catalogue and returning the loan information, it is possible for each of digital copies having mutiple loan records (given the they can be borrowed while on loan). Should we display all the loan records for digital copies or just the most recent one?
+
+
+Error Encountered: 
+1. Virtual envrionment cannot be activated
+Error messages: Scripts\Activate.ps1 cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
+Solution: 
+https://www.sharepointdiary.com/2014/03/fix-for-powershell-script-cannot-be-loaded-because-running-scripts-is-disabled-on-this-system.html
