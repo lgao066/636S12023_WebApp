@@ -17,6 +17,10 @@ Steps:
 
 3. Use the virtualenv as python interpreter (otherwise not able to pick up the packages installed inside this virtualenv)
 
+4. Navigate to folder librarywebapp (where app.py is located), and run the following commands
+        flask run
+        Webapp running on http://127.0.0.1:5000
+
 Steps:
 
 Create virtual environment using the following commands py -3 -m venv .venv .venv\Scripts\activate.bat

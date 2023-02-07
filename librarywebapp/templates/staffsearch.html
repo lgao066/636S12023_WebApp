@@ -1,10 +1,12 @@
 <!-- Name:       Li Gao  -->
 <!-- Student ID: 1155084 -->
 
-{% extends "base.html" %}
+{% extends "basebooksearch.html" %}
 
 {% block title %}
-Staff base -
+{% endblock %}
+
+{% block header %}
 {% endblock %}
 
 {% block navigation %}
@@ -12,14 +14,6 @@ Staff base -
 <li><a href="{{ url_for('listborrowers') }}">List Borrowers</a></li>
 <li><a href="{{ url_for('loanbook') }}">Loan Book</a></li>
 <li><a href="{{ url_for('currentloans') }}">Current Loans</a></li>
-<li><a href="{{ url_for('staff_home') }}">Staff Portal</a></li>
+<li><a href="{{ url_for('staff_home') }}">Staff Return</a></li>
 <br>
-{% endblock %}
-
-{% block header %}
-
-{% endblock %}
-
-{% block content %}
-
 {% endblock %}

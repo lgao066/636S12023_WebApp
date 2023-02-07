@@ -35,26 +35,29 @@ search_avaiable_books = '''SELECT bookcopies.bookcopyid, books.booktitle, books.
                             order by books.booktitle asc;'''
 #endregion
 
+def searchbooks(page = "publicsearch.html"):
+    connection = getCursor()
+    connection.execute(search_avaiable_books)
+    bookList = connection.fetchall()
+    print(bookList)
+    return render_template(page, booklist = bookList)
+
 #region App routing
 @app.route("/")
 def public_home():
-    return render_template("base.html")
+    return render_template("publicbase.html")
 
 @app.route("/staff")
 def staff_home():
     return render_template("staffbase.html")
 
 @app.route("/search")
-def searchbooks():
-    connection = getCursor()
-    #str1 = search_avaiable_books
-    #print(str1)
-    #str = search_avaiable_books, ("","",)
-    #print(str)
-    connection.execute(search_avaiable_books)
-    bookList = connection.fetchall()
-    print(bookList)
-    return render_template("searchbook.html", booklist = bookList)
+def public_searchbooks():
+    return searchbooks()
+
+@app.route("/staff/search")
+def staff_searchbooks():
+    return searchbooks("staffsearch.html")
 
 @app.route("/search", methods=["POST"])
 def searchbooks_post():
