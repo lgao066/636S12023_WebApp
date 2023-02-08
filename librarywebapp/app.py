@@ -47,7 +47,7 @@ def listbooks(page = "publicbooklist.html"):
     print(bookList)
     return render_template(page, booklist = bookList)
 
-def searchbooks(page = "publicsearch.html"):
+def searchbooks(page = "publicbooksearch.html"):
     connection = getCursor()
     author = request.form.get('author')
     author = "" if author is None else author.strip()
@@ -76,7 +76,7 @@ def staff_home():
 @app.route("/staff/search")
 @app.route("/staff/search", methods=["POST"])
 def staff_searchbooks():
-    return searchbooks("staffsearch.html")
+    return searchbooks("staffbooksearch.html")
 
 @app.route("/search")
 @app.route("/search", methods=["POST"])
@@ -114,7 +114,7 @@ def listborrowers():
     sql = search_available_borrowers % (sqlfirstname, sqllastname, sqlborrowerid,)
     connection.execute(sql)
     borrowerList = connection.fetchall()
-    return render_template("staffborrowerlist.html", borrowerlist = borrowerList, firstname = firstname, lastname = lastname, borrowerid = borrowerid)
+    return render_template("staffborrowersearch.html", borrowerlist = borrowerList, firstname = firstname, lastname = lastname, borrowerid = borrowerid)
 
 #  pages
 @app.route("/staff/loanbook")
