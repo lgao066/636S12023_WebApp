@@ -6,3 +6,64 @@
 {% block title %}
 Edit/Add Borrower -
 {% endblock %}
+
+{% block content_borrower_edit %}
+<h4 style="color:SlateBlue;">Edit or Add borrowers in our library</h4>
+<hr />
+
+<form class="form-inline" id="editborrower" name="editborrower" action="/staff/editborrowers" method="post">
+    <div class="row" style = "border: 1px solid SlateBlue; background-color: rgb(255, 246, 205);">
+        <fieldset id="borrowerInfo" style="float: left; margin: 5px 0px 5px 2%; width: 25%;">
+            <div class="form-group">
+                <label for="firstname" style="color:SlateBlue;">First Name:</label>
+                <input type="text" class="form-control" id="firstname" placeholder="Enter first name(s)" name="firstname" style="width:90%" value="{{firstname}}">
+            </div>
+            <div class="form-group">
+                <label for="lastname" style="color:SlateBlue;">Last Name:</label>
+                <input type="text" class="form-control" id="lastname" placeholder="Enter last name" name="lastname" style="width:90%" value="{{lastname}}">
+            </div>
+        </fieldset>
+        <fieldset id="addressInfo" style="float: left; margin: 5px 0px 5px; width: 25%;">
+            <div class="form-group">
+                <label for="dob" style="color:SlateBlue;">Date of Birth:</label>
+                <input type="text" class="form-control" id="dob" placeholder="Enter date of birth" name="dob" style="width:90%" value="{{dob}}">
+            </div>
+            <div class="form-group">
+                <label for="HouseNum" style="color:SlateBlue;">House Number:</label>
+                <input type="text" class="form-control" id="HouseNum" placeholder="Enter House Number" name="HouseNum" style="width:90%" value="{{HouseNum}}">
+            </div>
+        </fieldset>
+        <fieldset id="addressInfo" style="float: left; margin: 5px 0px 5px; width: 25%;">
+            <div class="form-group">
+                <label for="Street" style="color:SlateBlue;">Street:</label>
+                <input type="text" class="form-control" id="Street" placeholder="Enter Street" name="Street" style="width:90%" value="{{Street}}">
+            </div>
+            <div class="form-group">
+                <label for="Town" style="color:SlateBlue;">Town:</label>
+                <input type="text" class="form-control" id="Town" placeholder="Enter Town" name="Town" style="width:90%" value="{{Town}}">
+            </div>
+        </fieldset>
+        <fieldset id="addressInfo" style="float: left; margin: 5px 0px 5px; width: 23%;">
+            <div class="form-group">
+                <label for="City" style="color:SlateBlue;">City:</label>
+                <input type="text" class="form-control" id="City" placeholder="Enter City" name="City" style="width:90%" value="{{City}}">
+            </div>
+            <div class="form-group">
+                <label for="Postcode" style="color:SlateBlue;">Postcode:</label>
+                <input type="text" class="form-control" id="Postcode" placeholder="Enter Postcode" name="Postcode" style="width:50%" value="{{Postcode}}">
+            </div>
+        </fieldset>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="borrowerid" style="color:SlateBlue;">Library Card ID (Borrower ID):</label>
+        <input type="text" class="form-control" id="borrowerid" placeholder="Enter library card ID (Borrower ID)" name="borrowerid" style="width:60%" value="{{borrowerid}}">
+    </div>
+    <br>
+    <button type="button" id="reset" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default" onclick="resetForm()">Reset </button>
+    <button type="button" id="edit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default">Edit</button>
+    <button type="button" id="add" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default">Add</button>
+</form>
+<br>
+
+{% endblock %}

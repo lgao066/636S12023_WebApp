@@ -57,9 +57,28 @@ def searchbooks(page = "publicbooksearch.html"):
     sqltitle = "%" + title + "%"  
     connection.execute(search_avaiable_books, (sqltitle, sqlauthor,))
     bookList = connection.fetchall()
-
     return render_template(page, booklist = bookList, author = author, title = title)
 
+def listborrowers(page = "staffborrowersearch.html"):
+    connection = getCursor()
+    
+    firstname = request.form.get('firstname')
+    firstname = "" if firstname is None else firstname.strip()
+
+    lastname = request.form.get('lastname')
+    lastname = "" if lastname is None else lastname.strip()
+    
+    borrowerid = request.form.get('borrowerid')
+    borrowerid = "" if borrowerid is None else borrowerid.strip()
+    
+    sqlfirstname = "'%" + firstname + "%'"
+    sqllastname = "'%" + lastname + "%'"
+    sqlborrowerid = "1=1" if borrowerid == "" else "borrowerid = " + borrowerid
+
+    sql = search_available_borrowers % (sqlfirstname, sqllastname, sqlborrowerid,)
+    connection.execute(sql)
+    borrowerList = connection.fetchall()
+    return render_template(page, borrowerlist = borrowerList, firstname = firstname, lastname = lastname, borrowerid = borrowerid)
 
 #region App routing
 
@@ -95,26 +114,13 @@ def public_listbooks():
 # Borrower pages
 @app.route("/staff/listborrowers")
 @app.route("/staff/listborrowers", methods=["POST"])
-def listborrowers():
-    connection = getCursor()
-    
-    firstname = request.form.get('firstname')
-    firstname = "" if firstname is None else firstname.strip()
+def searchborrowers():
+    return listborrowers()
 
-    lastname = request.form.get('lastname')
-    lastname = "" if lastname is None else lastname.strip()
-    
-    borrowerid = request.form.get('borrowerid')
-    borrowerid = "" if borrowerid is None else borrowerid.strip()
-    
-    sqlfirstname = "'%" + firstname + "%'"
-    sqllastname = "'%" + lastname + "%'"
-    sqlborrowerid = "1=1" if borrowerid == "" else "borrowerid = " + borrowerid
-
-    sql = search_available_borrowers % (sqlfirstname, sqllastname, sqlborrowerid,)
-    connection.execute(sql)
-    borrowerList = connection.fetchall()
-    return render_template("staffborrowersearch.html", borrowerlist = borrowerList, firstname = firstname, lastname = lastname, borrowerid = borrowerid)
+@app.route("/staff/editborrowers")
+@app.route("/staff/editborrowers", methods=["POST"])
+def editborrowers():
+    return listborrowers("staffeditborrower.html")
 
 #  pages
 @app.route("/staff/loanbook")
