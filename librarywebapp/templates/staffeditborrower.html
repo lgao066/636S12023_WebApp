@@ -67,17 +67,22 @@ Edit/Add Borrower -
 
 <script>
     const btn = document.querySelector('#submit');
+    const borrowerid = document.querySelector('#borrowerid')
     const firstname = document.querySelector('#firstname')
     const lastname = document.querySelector('#lastname')
-    const borrowerid = document.querySelector('#borrowerid')
+    const dob = document.querySelector('#dob')
+    const housenum = document.querySelector('#housenum');
+    const street = document.querySelector('#street')
+    const town = document.querySelector('#town')
+    const city = document.querySelector('#city')
+    const postcode = document.querySelector('#postcode')
 
     function validateDate() {
-        let date = document.getElementById("dob");
         let today = new Date();
-        let enteredDate = new Date(date.value);
+        let enteredDate = new Date(dob.value);
         if (enteredDate > today) {
             alert("Date of birth cannot be in the future");
-            date.value = "";
+            dob.value = "";
         }
     }
 
@@ -90,21 +95,30 @@ Edit/Add Borrower -
     }
 
     function validatePostcode() {
-        let field = document.getElementById("postcode");
-        if (!/^\d+$/.test(field.value) || field.value.length > 4) {
+        if (!/^\d+$/.test(postcode.value) || postcode.value.length > 4) {
             alert("Postcode entered is either non-digits or longer than 4 digits. Please try again!");
-            field.value = "";
+            postcode.value = "";
         }
     }
 
     btn.onclick = (event) => { 
         // show the selected index
-        if(firstname.value == "" && lastname.value == "" && borrowerid.value == "")
+        if(borrowerid.value == "")
         {
-            event.preventDefault();
-            alert("Oops! Please enter at least one value for a borrower's firstname, lastname or borrowerid");
+            // add mode
+            if(firstname.value == "" || lastname.value == "" || dob.value == ""){
+                event.preventDefault();
+                alert("Please enter firstname, lastname and date of birth for the new borrower");
+            }
+        } else {
+            // edit mode
+            if(firstname.value == "" && lastname.value == "" && street.value == "" && city.value == "" && postcode.value == "" && town.value == "" && dob.value == "" && housenum.value == ""){
+                event.preventDefault();
+                alert("No new values are entered for editing the borrower. Please try again!");
+            }
         }
     };
+    //&& street.value == "" && city.value == "" && postcode.value == "" && town
 
     function resetForm() {
     // get all form elements
@@ -118,6 +132,7 @@ Edit/Add Borrower -
         // check the type of form element
         switch (element.type) {
         case "text":
+        case "date":
         case "textarea":
         case "select-one":
             element.value = "";

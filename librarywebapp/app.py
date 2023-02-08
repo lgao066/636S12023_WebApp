@@ -36,7 +36,13 @@ search_avaiable_books = '''SELECT bookcopies.bookcopyid, books.booktitle, books.
 
 search_available_borrowers = '''SELECT * FROM borrowers where firstname like %s and familyname like %s and %s;'''
 
+add_new_borrower = '''INSERT INTO borrowers(firstname, familyname, dateofbirth, housenumbername, street, town, city, postalcode)
+                    VALUES(%s, %s, %s, %s, %s, %s, %s, %s);'''
 
+edit_existing_borrower = '''update borrowers SET %s %s %s %s %s %s %s %s where borrowerid = %s;'''
+
+sql_update_loan = '''INSERT INTO loans(bookcopyid, borrowerid, loandate, returned)
+                    VALUES(%s, %s, CURDATE(), 0);'''
 #endregion
 
 
@@ -118,8 +124,11 @@ def searchborrowers():
     return listborrowers()
 
 @app.route("/staff/editborrowers")
-@app.route("/staff/editborrowers", methods=["POST"])
 def editborrowers():
+    return listborrowers("staffeditborrower.html")
+
+@app.route("/staff/editborrowers", methods=["POST"])
+def editoraddborrowers():
     borrowerid = request.form.get('borrowerid')
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')
@@ -129,7 +138,12 @@ def editborrowers():
     town = request.form.get('town')
     city = request.form.get('city')
     postcode = request.form.get('postcode')
-    print(borrowerid, firstname, lastname, dob, housenum, street, town, city, postcode)
+    connection = getCursor()
+    if borrowerid == "":
+        connection.execute(add_new_borrower, (firstname, lastname, dob, housenum, street, town, city, postcode, ))
+    else:
+        print("edit")
+        #connection.execute(edit_existing_borrower, (firstname, lastname, dob, housenum, street, town, city, postcode, borrowerid, ))
     return listborrowers("staffeditborrower.html")
 
 #  pages
