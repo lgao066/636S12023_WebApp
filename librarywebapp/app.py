@@ -33,7 +33,13 @@ search_avaiable_books = '''SELECT bookcopies.bookcopyid, books.booktitle, books.
                             group by bookcopies.bookcopyid
                             having books.booktitle like %s and books.author like %s
                             order by books.booktitle asc;'''
+
+search_available_borrowers = '''SELECT * FROM borrowers where firstname like %s and familyname like %s and %s;'''
+
+
 #endregion
+
+
 def listbooks(page = "publicbooklist.html"):
     connection = getCursor()
     connection.execute("SELECT * FROM books;")
@@ -56,6 +62,8 @@ def searchbooks(page = "publicsearch.html"):
 
 
 #region App routing
+
+# Main pages
 @app.route("/")
 def public_home():
     return render_template("publicbase.html")
@@ -64,6 +72,7 @@ def public_home():
 def staff_home():
     return render_template("staffbase.html")
 
+# Search pages
 @app.route("/staff/search")
 @app.route("/staff/search", methods=["POST"])
 def staff_searchbooks():
@@ -74,6 +83,7 @@ def staff_searchbooks():
 def public_searchbooks():
     return searchbooks()
 
+# Book list pages
 @app.route("/staff/listbooks")
 def staff_listbooks():
     return listbooks("staffbooklist.html")
@@ -82,6 +92,31 @@ def staff_listbooks():
 def public_listbooks():
     return listbooks()
 
+# Borrower pages
+@app.route("/staff/listborrowers")
+@app.route("/staff/listborrowers", methods=["POST"])
+def listborrowers():
+    connection = getCursor()
+    
+    firstname = request.form.get('firstname')
+    firstname = "" if firstname is None else firstname.strip()
+
+    lastname = request.form.get('lastname')
+    lastname = "" if lastname is None else lastname.strip()
+    
+    borrowerid = request.form.get('borrowerid')
+    borrowerid = "" if borrowerid is None else borrowerid.strip()
+    
+    sqlfirstname = "'%" + firstname + "%'"
+    sqllastname = "'%" + lastname + "%'"
+    sqlborrowerid = "1=1" if borrowerid == "" else "borrowerid = " + borrowerid
+
+    sql = search_available_borrowers % (sqlfirstname, sqllastname, sqlborrowerid,)
+    connection.execute(sql)
+    borrowerList = connection.fetchall()
+    return render_template("staffborrowerlist.html", borrowerlist = borrowerList, firstname = firstname, lastname = lastname, borrowerid = borrowerid)
+
+#  pages
 @app.route("/staff/loanbook")
 def loanbook():
     todaydate = datetime.now().date()
@@ -103,13 +138,6 @@ def addloan():
     cur = getCursor()
     cur.execute("INSERT INTO loans (borrowerid, bookcopyid, loandate, returned) VALUES(%s,%s,%s,0);",(borrowerid, bookid, str(loandate),))
     return redirect("/currentloans")
-
-@app.route("/staff/listborrowers")
-def listborrowers():
-    connection = getCursor()
-    connection.execute("SELECT * FROM borrowers;")
-    borrowerList = connection.fetchall()
-    return render_template("borrowerlist.html", borrowerlist = borrowerList)
 
 @app.route("/staff/currentloans")
 def currentloans():
