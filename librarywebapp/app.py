@@ -44,13 +44,15 @@ def listbooks(page = "publicbooklist.html"):
 def searchbooks(page = "publicsearch.html"):
     connection = getCursor()
     author = request.form.get('author')
+    author = "" if author is None else author.strip()
     title = request.form.get('title')
-    author = "%%" if author is None else "%" + author.strip() + "%"  
-    title = "%%" if title is None else "%" + title.strip()  + "%"
-    connection.execute(search_avaiable_books, (title, author,))
+    title = "" if title is None else title.strip()
+    sqlauthor = "%" + author + "%"  
+    sqltitle = "%" + title + "%"  
+    connection.execute(search_avaiable_books, (sqltitle, sqlauthor,))
     bookList = connection.fetchall()
 
-    return render_template(page, booklist = bookList)
+    return render_template(page, booklist = bookList, author = author, title = title)
 
 
 #region App routing
