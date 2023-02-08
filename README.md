@@ -63,3 +63,15 @@ Error Encountered:
 Error messages: Scripts\Activate.ps1 cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
 Solution: 
 https://www.sharepointdiary.com/2014/03/fix-for-powershell-script-cannot-be-loaded-because-running-scripts-is-disabled-on-this-system.html
+
+Page Template Hiarachy:
+base.html => booklist.html
+
+          => basebooksearch.html => publicsearch.html
+                                 => staffsearch.html
+
+          => publicbase.html
+
+          => staffbase.html      => addloan.html
+                                 => borowerlist.html
+                                 => currentloans.html
