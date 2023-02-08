@@ -1,19 +1,13 @@
 <!-- Name:       Li Gao  -->
 <!-- Student ID: 1155084 -->
 
-{% extends "base.html" %}
+{% extends "staffbase.html" %}
 
 {% block title %}
 Loan List -
 {% endblock %}
 
-{% block navigation %}
-<li><a href="{{ url_for('listborrowers') }}">List Borrowers</a></li>
-<li><a href="{{ url_for('loanbook') }}">Loan Book</a></li>
-<li><a href="{{ url_for('currentloans') }}">Current Loans</a></li>
-<li><a href="{{ url_for('staff_home') }}">Staff Return</a></li>
-<br>
-{% endblock %}
+
 
 {% block content %}
 <!-- code in here to display a list of loans -->
