@@ -18,18 +18,8 @@ Search Book -
 <h4 style="color:SlateBlue;">A list of all books in our collection</h4>
 <hr />
 
-<form class="form-inline" id="searchbook" name="searchbook" action="/loan/add" method="post">
-    <div class="form-group">
-        <label for="title">Title:</label>
-        <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" style="width:50%">
-    </div>
-    <div class="form-group">
-        <label for="author">Author:</label>
-        <input type="text" class="form-control" id="author" placeholder="Enter author" name="author" style="width:50%">
-    </div>
-    <br>
-    <button type="submit" id="submit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default">Search</button>
-</form>
+{% block postcontent %}
+{% endblock %}
 <br>
 
 <script>
@@ -42,10 +32,6 @@ Search Book -
         {
             event.preventDefault();
             alert("Oops! Please enter an author and/or a book name and try again!");
-        }
-        else
-        {
-            alert("Cool!");
         }
     };
 </script>

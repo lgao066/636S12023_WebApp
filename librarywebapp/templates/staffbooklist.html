@@ -1,11 +1,7 @@
 <!-- Name:       Li Gao  -->
 <!-- Student ID: 1155084 -->
 
-{% extends "base.html" %}
-
-{% block title %}
-Staff base -
-{% endblock %}
+{% extends "basebooklist.html" %}
 
 {% block navigation %}
 <li><a href="{{ url_for('staff_listbooks') }}">List Books</a></li>
@@ -15,12 +11,4 @@ Staff base -
 <li><a href="{{ url_for('currentloans') }}">Current Loans</a></li>
 <li><a href="{{ url_for('staff_home') }}">Staff Portal</a></li>
 <br>
-{% endblock %}
-
-{% block header %}
-
-{% endblock %}
-
-{% block content %}
-
 {% endblock %}

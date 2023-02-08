@@ -31,16 +31,27 @@ search_avaiable_books = '''SELECT bookcopies.bookcopyid, books.booktitle, books.
                             inner join books on books.bookid = bookcopies.bookid
                             left join loans on bookcopies.bookcopyid = loans.bookcopyid
                             group by bookcopies.bookcopyid
-                            having books.booktitle like '%%' and books.author like '%%'
+                            having books.booktitle like %s and books.author like %s
                             order by books.booktitle asc;'''
 #endregion
-
-def searchbooks(page = "publicsearch.html"):
+def listbooks(page = "publicbooklist.html"):
     connection = getCursor()
-    connection.execute(search_avaiable_books)
+    connection.execute("SELECT * FROM books;")
     bookList = connection.fetchall()
     print(bookList)
     return render_template(page, booklist = bookList)
+
+def searchbooks(page = "publicsearch.html"):
+    connection = getCursor()
+    author = request.form.get('author')
+    title = request.form.get('title')
+    author = "%%" if author is None else "%" + author.strip() + "%"  
+    title = "%%" if title is None else "%" + title.strip()  + "%"
+    connection.execute(search_avaiable_books, (title, author,))
+    bookList = connection.fetchall()
+
+    return render_template(page, booklist = bookList)
+
 
 #region App routing
 @app.route("/")
@@ -51,29 +62,23 @@ def public_home():
 def staff_home():
     return render_template("staffbase.html")
 
-@app.route("/search")
-def public_searchbooks():
-    return searchbooks()
-
 @app.route("/staff/search")
+@app.route("/staff/search", methods=["POST"])
 def staff_searchbooks():
     return searchbooks("staffsearch.html")
 
+@app.route("/search")
 @app.route("/search", methods=["POST"])
-def searchbooks_post():
-    author = request.form.get('author')
-    book = request.form.get('book')
-    cur = getCursor()
-    cur.execute(search_avaiable_books,(author, book,))
-    return redirect("/search")
+def public_searchbooks():
+    return searchbooks()
+
+@app.route("/staff/listbooks")
+def staff_listbooks():
+    return listbooks("staffbooklist.html")
 
 @app.route("/listbooks")
-def listbooks():
-    connection = getCursor()
-    connection.execute("SELECT * FROM books;")
-    bookList = connection.fetchall()
-    print(bookList)
-    return render_template("booklist.html", booklist = bookList)    
+def public_listbooks():
+    return listbooks()
 
 @app.route("/staff/loanbook")
 def loanbook():
