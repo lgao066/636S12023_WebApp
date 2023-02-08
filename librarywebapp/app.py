@@ -120,6 +120,16 @@ def searchborrowers():
 @app.route("/staff/editborrowers")
 @app.route("/staff/editborrowers", methods=["POST"])
 def editborrowers():
+    borrowerid = request.form.get('borrowerid')
+    firstname = request.form.get('firstname')
+    lastname = request.form.get('lastname')
+    dob = request.form.get('dob')
+    housenum = request.form.get('housenum')
+    street = request.form.get('street')
+    town = request.form.get('town')
+    city = request.form.get('city')
+    postcode = request.form.get('postcode')
+    print(borrowerid, firstname, lastname, dob, housenum, street, town, city, postcode)
     return listborrowers("staffeditborrower.html")
 
 #  pages

@@ -13,57 +13,121 @@ Edit/Add Borrower -
 
 <form class="form-inline" id="editborrower" name="editborrower" action="/staff/editborrowers" method="post">
     <div class="row" style = "border: 1px solid SlateBlue; background-color: rgb(255, 246, 205);">
-        <fieldset id="borrowerInfo" style="float: left; margin: 5px 0px 5px 2%; width: 25%;">
+        <fieldset style="float: left; margin: 5px 0px 5px 2%; width: 25%;">
             <div class="form-group">
                 <label for="firstname" style="color:SlateBlue;">First Name:</label>
-                <input type="text" class="form-control" id="firstname" placeholder="Enter first name(s)" name="firstname" style="width:90%" value="{{firstname}}">
+                <input type="text" class="form-control" id="firstname" placeholder="Enter first name(s)" name="firstname" style="width:90%" value="{{firstname}}" onblur="validateTextfield('firstname', 45)">
             </div>
             <div class="form-group">
                 <label for="lastname" style="color:SlateBlue;">Last Name:</label>
-                <input type="text" class="form-control" id="lastname" placeholder="Enter last name" name="lastname" style="width:90%" value="{{lastname}}">
+                <input type="text" class="form-control" id="lastname" placeholder="Enter last name" name="lastname" style="width:90%" value="{{lastname}}" onblur="validateTextfield('lastname', 45)">
             </div>
         </fieldset>
-        <fieldset id="addressInfo" style="float: left; margin: 5px 0px 5px; width: 25%;">
+        <fieldset style="float: left; margin: 5px 0px 5px; width: 25%;">
             <div class="form-group">
                 <label for="dob" style="color:SlateBlue;">Date of Birth:</label>
-                <input type="text" class="form-control" id="dob" placeholder="Enter date of birth" name="dob" style="width:90%" value="{{dob}}">
+                <input type="date" class="form-control" id="dob" placeholder="Enter date of birth" name="dob" style="width:90%" value="{{dob}}" onblur="validateDate()">
             </div>
             <div class="form-group">
-                <label for="HouseNum" style="color:SlateBlue;">House Number:</label>
-                <input type="text" class="form-control" id="HouseNum" placeholder="Enter House Number" name="HouseNum" style="width:90%" value="{{HouseNum}}">
-            </div>
-        </fieldset>
-        <fieldset id="addressInfo" style="float: left; margin: 5px 0px 5px; width: 25%;">
-            <div class="form-group">
-                <label for="Street" style="color:SlateBlue;">Street:</label>
-                <input type="text" class="form-control" id="Street" placeholder="Enter Street" name="Street" style="width:90%" value="{{Street}}">
-            </div>
-            <div class="form-group">
-                <label for="Town" style="color:SlateBlue;">Town:</label>
-                <input type="text" class="form-control" id="Town" placeholder="Enter Town" name="Town" style="width:90%" value="{{Town}}">
+                <label for="housenum" style="color:SlateBlue;">House Number:</label>
+                <input type="text" class="form-control" id="housenum" placeholder="Enter House Number" name="housenum" style="width:90%" value="{{housenum}}" onblur="validateTextfield('housenum', 10)">
             </div>
         </fieldset>
-        <fieldset id="addressInfo" style="float: left; margin: 5px 0px 5px; width: 23%;">
+        <fieldset style="float: left; margin: 5px 0px 5px; width: 25%;">
             <div class="form-group">
-                <label for="City" style="color:SlateBlue;">City:</label>
-                <input type="text" class="form-control" id="City" placeholder="Enter City" name="City" style="width:90%" value="{{City}}">
+                <label for="street" style="color:SlateBlue;">Street:</label>
+                <input type="text" class="form-control" id="street" placeholder="Enter Street" name="street" style="width:90%" value="{{street}}" onblur="validateTextfield('street', 20)">
             </div>
             <div class="form-group">
-                <label for="Postcode" style="color:SlateBlue;">Postcode:</label>
-                <input type="text" class="form-control" id="Postcode" placeholder="Enter Postcode" name="Postcode" style="width:50%" value="{{Postcode}}">
+                <label for="town" style="color:SlateBlue;">Town:</label>
+                <input type="text" class="form-control" id="town" placeholder="Enter Town" name="town" style="width:90%" value="{{town}}" onblur="validateTextfield('town', 25)">
+            </div>
+        </fieldset>
+        <fieldset style="float: left; margin: 5px 0px 5px; width: 23%;">
+            <div class="form-group">
+                <label for="city" style="color:SlateBlue;">City:</label>
+                <input type="text" class="form-control" id="city" placeholder="Enter City" name="city" style="width:90%" value="{{city}}" onblur="validateTextfield('city', 25)">
+            </div>
+            <div class="form-group">
+                <label for="postcode" style="color:SlateBlue;">Postcode:</label>
+                <input type="text" class="form-control" id="postcode" placeholder="Enter Postcode" name="postcode" style="width:50%" value="{{postcode}}" onblur="validatePostcode()">
             </div>
         </fieldset>
     </div>
     <br>
     <div class="form-group">
         <label for="borrowerid" style="color:SlateBlue;">Library Card ID (Borrower ID):</label>
-        <input type="text" class="form-control" id="borrowerid" placeholder="Enter library card ID (Borrower ID)" name="borrowerid" style="width:60%" value="{{borrowerid}}">
+        <input type="text" class="form-control" id="borrowerid" placeholder="Enter the library card ID of the borrower who you want to edit, leave it blank if you want to add a new one" name="borrowerid" style="width:60%" value="{{borrowerid}}">
     </div>
     <br>
-    <button type="button" id="reset" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default" onclick="resetForm()">Reset </button>
-    <button type="button" id="edit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default">Edit</button>
-    <button type="button" id="add" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default">Add</button>
+    <button type="button" id="reset" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white; width: 150px;" class="btn btn-default" onclick="resetForm()">Reset </button>
+    <button type="submit" id="submit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white; width: 150px;" class="btn btn-default">Add or Edit</button>
 </form>
 <br>
 
+<script>
+    const btn = document.querySelector('#submit');
+    const firstname = document.querySelector('#firstname')
+    const lastname = document.querySelector('#lastname')
+    const borrowerid = document.querySelector('#borrowerid')
+
+    function validateDate() {
+        let date = document.getElementById("dob");
+        let today = new Date();
+        let enteredDate = new Date(date.value);
+        if (enteredDate > today) {
+            alert("Date of birth cannot be in the future");
+            date.value = "";
+        }
+    }
+
+    function validateTextfield(id, length) {
+        let field = document.getElementById(id);
+        if (field.value.length > length) {
+            alert("Value entered cannot be longer than " + length + " digits. Please try again!");
+            field.value = "";
+        }
+    }
+
+    function validatePostcode() {
+        let field = document.getElementById("postcode");
+        if (!/^\d+$/.test(field.value) || field.value.length > 4) {
+            alert("Postcode entered is either non-digits or longer than 4 digits. Please try again!");
+            field.value = "";
+        }
+    }
+
+    btn.onclick = (event) => { 
+        // show the selected index
+        if(firstname.value == "" && lastname.value == "" && borrowerid.value == "")
+        {
+            event.preventDefault();
+            alert("Oops! Please enter at least one value for a borrower's firstname, lastname or borrowerid");
+        }
+    };
+
+    function resetForm() {
+    // get all form elements
+    form = document.getElementById("editborrower");
+    let elements = form.elements;
+    
+    // loop through all form elements
+    for (let i = 0; i < elements.length; i++) {
+        let element = elements[i];
+
+        // check the type of form element
+        switch (element.type) {
+        case "text":
+        case "textarea":
+        case "select-one":
+            element.value = "";
+            break;
+        case "checkbox":
+        case "radio":
+            element.checked = false;
+            break;
+        }
+    }
+  }
+</script>
 {% endblock %}
