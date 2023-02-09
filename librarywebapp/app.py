@@ -39,10 +39,34 @@ search_available_borrowers = '''SELECT * FROM borrowers where firstname like %s 
 add_new_borrower = '''INSERT INTO borrowers(firstname, familyname, dateofbirth, housenumbername, street, town, city, postalcode)
                     VALUES(%s, %s, %s, %s, %s, %s, %s, %s);'''
 
-edit_existing_borrower = '''update borrowers SET %s %s %s %s %s %s %s %s where borrowerid = %s;'''
+edit_existing_borrower = '''update borrowers SET %s where borrowerid = %s;'''
 
 sql_update_loan = '''INSERT INTO loans(bookcopyid, borrowerid, loandate, returned)
                     VALUES(%s, %s, CURDATE(), 0);'''
+
+sql_update_loan = '''INSERT INTO loans(bookcopyid, borrowerid, loandate, returned)
+                    VALUES(%s, %s, CURDATE(), 0);'''
+
+sql_list_newly_added_loan = '''SELECT loanid as LoanID, bookcopyid as BookCopyID, borrowerid AS BorrowerID, 
+                    loandate as LoanDate, returned as Returned FROM library.loans 
+                    WHERE bookcopyid = %s and borrowerid = %s and loandate = CURDATE();'''
+
+sql_overdue_books = '''SELECT borrowers.familyname As "Family Name", 
+                    borrowers.firstname As "First Name", 
+                    DATEDIFF(CURDATE(), loandate) As "Days On Loan",
+                    books.booktitle As Title
+                    FROM loans
+                    INNER JOIN borrowers ON loans.borrowerid = borrowers.borrowerid
+                    INNER JOIN bookcopies ON loans.bookcopyid = bookcopies.bookcopyid
+                    INNER JOIN books ON books.bookid = bookcopies.bookid
+                    WHERE returned <> 1 and loandate < DATE_ADD(CURDATE(), INTERVAL -35 DAY)
+                    ORDER BY DATEDIFF(CURDATE(), loandate) desc;'''
+
+sql_most_loaned_books = '''SELECT count(books.bookid) As "Borrowed times", books.booktitle As Title FROM loans
+                    LEFT JOIN bookcopies ON loans.bookcopyid = bookcopies.bookcopyid
+                    INNER JOIN books ON books.bookid = bookcopies.bookid
+                    group by books.bookid
+                    ORDER BY "Borrowed times" desc;'''
 #endregion
 
 
@@ -68,14 +92,9 @@ def searchbooks(page = "publicbooksearch.html"):
 def listborrowers(page = "staffborrowersearch.html"):
     connection = getCursor()
     
-    firstname = request.form.get('firstname')
-    firstname = "" if firstname is None else firstname.strip()
-
-    lastname = request.form.get('lastname')
-    lastname = "" if lastname is None else lastname.strip()
-    
-    borrowerid = request.form.get('borrowerid')
-    borrowerid = "" if borrowerid is None else borrowerid.strip()
+    firstname = convert_to_string_stripped(request.form.get('firstname'))
+    lastname = convert_to_string_stripped(request.form.get('lastname')) 
+    borrowerid = convert_to_string_stripped(request.form.get('borrowerid'))
     
     sqlfirstname = "'%" + firstname + "%'"
     sqllastname = "'%" + lastname + "%'"
@@ -85,6 +104,18 @@ def listborrowers(page = "staffborrowersearch.html"):
     connection.execute(sql)
     borrowerList = connection.fetchall()
     return render_template(page, borrowerlist = borrowerList, firstname = firstname, lastname = lastname, borrowerid = borrowerid)
+
+def listeditoraddborrowers(page = "staffborrowersearch.html", message = ""):
+    connection = getCursor()
+    borrowerid = convert_to_string_stripped(request.form.get('borrowerid'))
+    sqlborrowerid = "1=1" if borrowerid == "" else "borrowerid = " + borrowerid
+    sql = search_available_borrowers % ("'%%'", "'%%'", sqlborrowerid,)
+    connection.execute(sql)
+    borrowerList = connection.fetchall()
+    return render_template(page, borrowerlist = borrowerList, message = message)
+
+def convert_to_string_stripped(ele):
+    return "" if (ele is None or ele == None) else ele.strip()
 
 #region App routing
 
@@ -129,24 +160,51 @@ def editborrowers():
 
 @app.route("/staff/editborrowers", methods=["POST"])
 def editoraddborrowers():
-    borrowerid = request.form.get('borrowerid')
-    firstname = request.form.get('firstname')
-    lastname = request.form.get('lastname')
-    dob = request.form.get('dob')
-    housenum = request.form.get('housenum')
-    street = request.form.get('street')
-    town = request.form.get('town')
-    city = request.form.get('city')
-    postcode = request.form.get('postcode')
+    borrowerid = convert_to_string_stripped(request.form.get('borrowerid'))
+    firstname = convert_to_string_stripped(request.form.get('firstname'))
+    lastname = convert_to_string_stripped(request.form.get('lastname'))
+    dob = convert_to_string_stripped(request.form.get('dob'))
+    housenum = convert_to_string_stripped(request.form.get('housenum'))
+    street = convert_to_string_stripped(request.form.get('street'))
+    town = convert_to_string_stripped(request.form.get('town'))
+    city = convert_to_string_stripped(request.form.get('city'))
+    postcode = convert_to_string_stripped(request.form.get('postcode'))
+
+    borrowerdict = {
+        "firstname": firstname,
+        "familyname": lastname,
+        "dateofbirth": dob,
+        "housenumbername": housenum,
+        "street": street,
+        "town": town,
+        "city": city,
+        "postalcode": postcode
+    }
+    
+    message = ""
     connection = getCursor()
     if borrowerid == "":
         connection.execute(add_new_borrower, (firstname, lastname, dob, housenum, street, town, city, postcode, ))
     else:
-        print("edit")
-        #connection.execute(edit_existing_borrower, (firstname, lastname, dob, housenum, street, town, city, postcode, borrowerid, ))
-    return listborrowers("staffeditborrower.html")
+        # Validate if the borrowerId is valid
+        sqlborrowerid = "borrowerid = " + borrowerid
+        sql = search_available_borrowers % ("'%%'", "'%%'", sqlborrowerid,)
+        connection.execute(sql)
+        borrower = connection.fetchall()
+        if (len(borrower) == 0):
+            # borrower trying to edit is not valid
+            message = "The current borrower is not found. Please try again!"
+            print("error message")
+        else:
+            sql_set_value = ""
+            for key in borrowerdict:
+                if (borrowerdict[key] != ""): # value to update
+                    sql_set_value = sql_set_value + key + " = '" + borrowerdict[key] + "',"
+            sql_update = edit_existing_borrower % (sql_set_value[:-1], borrowerid,)
+            connection.execute(sql_update)
+    return listeditoraddborrowers("staffeditborrower.html", message = message)
 
-#  pages
+# Add a new loan page
 @app.route("/staff/loanbook")
 def loanbook():
     todaydate = datetime.now().date()
@@ -168,6 +226,18 @@ def addloan():
     cur = getCursor()
     cur.execute("INSERT INTO loans (borrowerid, bookcopyid, loandate, returned) VALUES(%s,%s,%s,0);",(borrowerid, bookid, str(loandate),))
     return redirect("/currentloans")
+
+# Return a book page
+
+
+# Display a list of all overdue books & their borrowers
+
+
+# Display a Loan Summary
+
+
+# Display a Borrower Summary
+
 
 @app.route("/staff/currentloans")
 def currentloans():
