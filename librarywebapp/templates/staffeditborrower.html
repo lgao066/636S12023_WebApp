@@ -68,6 +68,34 @@ Edit/Add Borrower -
 <form action="{{ url_for('editborrowers') }}">
     <button type="submit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default">Edit or Add Again</button>
 </form>
+
+
+<table id="myTable">
+<tr>
+    <td>Column 1</td>
+    <td>Column 2</td>
+    <td>Column 3</td>
+    <td>
+    <button onclick="editRow(this)">Edit</button>
+    </td>
+</tr>
+<tr>
+    <td>Data 1</td>
+    <td>Data 2</td>
+    <td>Data 3</td>
+    <td>
+    <button onclick="editRow(this)">Edit</button>
+    </td>
+</tr>
+<tr>
+    <td>Data 4</td>
+    <td>Data 5</td>
+    <td>Data 6</td>
+    <td>
+    <button onclick="editRow(this)">Edit</button>
+    </td>
+</tr>
+</table>
 <br>
 
 <script>
@@ -125,28 +153,51 @@ Edit/Add Borrower -
     };
 
     function resetForm() {
-    // get all form elements
-    form = document.getElementById("editborrower");
-    let elements = form.elements;
-    
-    // loop through all form elements
-    for (let i = 0; i < elements.length; i++) {
-        let element = elements[i];
+        // get all form elements
+        form = document.getElementById("editborrower");
+        let elements = form.elements;
+        
+        // loop through all form elements
+        for (let i = 0; i < elements.length; i++) {
+            let element = elements[i];
 
-        // check the type of form element
-        switch (element.type) {
-        case "text":
-        case "date":
-        case "textarea":
-        case "select-one":
-            element.value = "";
-            break;
-        case "checkbox":
-        case "radio":
-            element.checked = false;
-            break;
+            // check the type of form element
+            switch (element.type) {
+            case "text":
+            case "date":
+            case "textarea":
+            case "select-one":
+                element.value = "";
+                break;
+            case "checkbox":
+            case "radio":
+                element.checked = false;
+                break;
+            }
         }
     }
-  }
+
+    function editRow(button) {
+        let tr = button.parentNode.parentNode;
+        let cells = tr.cells;
+        for (let i = 0; i < cells.length - 1; i++) {
+            let cell = cells[i];
+            let input = document.createElement("input");
+            input.value = cell.innerHTML;
+            cell.innerHTML = "";
+            cell.appendChild(input);
+        }
+        button.innerHTML = "Save";
+        button.onclick = function() {
+            for (let i = 0; i < cells.length - 1; i++) {
+            let cell = cells[i];
+            cell.innerHTML = cell.firstChild.value;
+            }
+            button.innerHTML = "Edit";
+            button.onclick = function() {
+            editRow(button);
+            };
+        };
+    }
 </script>
 {% endblock %}
