@@ -70,11 +70,11 @@ sql_overdue_books = '''SELECT borrowers.familyname As "Family Name",
                     WHERE returned <> 1 and loandate < DATE_ADD(CURDATE(), INTERVAL -35 DAY)
                     ORDER BY DATEDIFF(CURDATE(), loandate) desc;'''
 
-sql_most_loaned_books = '''SELECT count(books.bookid) As "Borrowed times", books.booktitle As Title FROM loans
+sql_most_loaned_books = '''SELECT count(loans.loanid) As "Borrowed Times", b.booktitle as Title, b.author as Author, b.category as Category, b.yearofpublication as Year FROM loans
                     LEFT JOIN bookcopies ON loans.bookcopyid = bookcopies.bookcopyid
-                    INNER JOIN books ON books.bookid = bookcopies.bookid
-                    group by books.bookid
-                    ORDER BY "Borrowed times" desc;'''
+                    INNER JOIN books b ON b.bookid = bookcopies.bookid
+                    group by b.bookid
+                    ORDER BY count(loans.loanid) desc;'''
 
 sql_borrower_summary_in_detail = '''select br.borrowerid, br.firstname, br.familyname,  
                                     l.borrowerid, l.bookcopyid, l.loandate, l.returned, b.bookid, b.booktitle, b.author, 
@@ -256,18 +256,22 @@ def addloan():
 
 
 # Display a Loan Summary
-
+@app.route("/staff/loansummary")
+def loansummary():
+    connection = getCursor()
+    connection.execute(sql_most_loaned_books)
+    loansummary = connection.fetchall()
+    return render_template("staffloansummary.html", loansummary = loansummary)
 
 # Display a Borrower Summary
-
 @app.route("/staff/currentloans")
 def currentloans():
     connection = getCursor()
     connection.execute(sql_borrower_summary_in_detail)
     detailedloanList = connection.fetchall()
     connection.execute(sql_borrower_summary)
-    loansummary = connection.fetchall()
-    return render_template("staffborrowersummary.html", loanlist = detailedloanList, loansummary = loansummary)
+    borrowersummary = connection.fetchall()
+    return render_template("staffborrowersummary.html", loanlist = detailedloanList, borrowersummary = borrowersummary)
 #endregion
 
 if __name__=="__app__":
