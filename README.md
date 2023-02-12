@@ -1,9 +1,34 @@
-# 636S12023_WebApp
+# Project Title
+
 COMP636 S1 2023 Library Web App 
 
-Web Application Project Summer School, 2022
+This project is created for COMP636 Summer School 2022 Web Application Final Assessment. A web-based library management system is created for Waikirikiri Library, which can be used to manage books, borrowers and loans.
 
-This is readme
+## Contact
+
+Author: Li Gao
+Student ID: 1155084
+Email: Li.Gao@lincolnuni.ac.nz
+
+## Getting Started
+
+Instructions on how to install and set up the project on a local machine for development and testing purposes.
+
+### Prerequisites
+
+Assumptions:
+
+1. Physical copies: Hardcover, Paperback, Illustrated; Digital copies (eBooks, Audio Books).
+2. Users cannot add a loan for a non-digital copy when another borrower still has that copy (I cannot borrow a particular paperback when another borrower still has it at her house).
+3. Users can add a loan for a digital copy any time (regardless of whether it is marked as returned or not returned)
+4. All loans have a due date, and can be 'returned', regardless of copy format.
+
+Code management - Code is stored in different locations
+1. Local machine: where the code development mainly happens
+2. GitHub Repo: where the code is mainly stored and distributed
+3. Pythonanywhere: production envrionment, code stored there is stable; DB connection file is different from GitHub
+
+### Installation
 
 Steps:
 0. Navigate to folder 636S12023_WebApp
@@ -21,11 +46,13 @@ Steps:
         flask run
         Webapp running on http://127.0.0.1:5000
 
-Steps:
+## Usage
 
-Create virtual environment using the following commands py -3 -m venv .venv .venv\Scripts\activate.bat
-Install the packages pip install -r requirements.txt
-Include a brief project report: • Outlining the structure of your solution (routes & functions). This should be brief, but be sure to indicate how your routes and templates relate to each other and what data is being passed between them, do not just give a list of your routes.
+Instructions on how to use the project, including examples of how to run it.
+
+
+Include a brief project report: 
+• Outlining the structure of your solution (routes & functions). This should be brief, but be sure to indicate how your routes and templates relate to each other and what data is being passed between them, do not just give a list of your routes.
 
 • Detailing any assumptions and design decisions that you have made. For example, did you share a page template between public and staff or use two separate pages? Did you detect GET or POST method to determine what page displays? If so, how and why? Note these types of decisions and assumptions as you work.
 
@@ -33,26 +60,6 @@ Include a brief project report: • Outlining the structure of your solution (ro
 
 This report must be created using GitHub Markdown and saved in the README.md file of your GitHub repository.
 
-First interface (public)
-        [Done] List all books available in the library at the /booklist route
-        Search Books - Search books by title and/or author
-        See the availability of all copies of a book
-        
-Second interface (staff)
-
-Added navigation panel for public and staff 04/02/2023
-
-Code management - Code is stored in different locations
-1. Local machine: where the code development mainly happens
-2. GitHub Repo: where the code is mainly stored and distributed
-3. Pythonanywhere: production envrionment, code stored there is stable; DB connection file is different from GitHub
-
-Assumptions:
-
-1. Physical copies: Hardcover, Paperback, Illustrated; Digital copies (eBooks, Audio Books).
-2. Users cannot add a loan for a non-digital copy when another borrower still has that copy (I cannot borrow a particular paperback when another borrower still has it at her house).
-3. Users can add a loan for a digital copy any time (regardless of whether it is marked as returned or not returned)
-4. All loans have a due date, and can be 'returned', regardless of copy format.
 
 Questions:
 When we are searching the catalogue and returning the loan information, it is possible for each of digital copies having mutiple loan records (given the they can be borrowed while on loan). Should we display all the loan records for digital copies or just the most recent one?

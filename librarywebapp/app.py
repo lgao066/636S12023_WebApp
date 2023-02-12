@@ -99,7 +99,7 @@ sql_borrower_summary = '''select br.borrowerid, br.firstname, br.familyname, br.
                             from books b
                             inner join bookcopies bc on b.bookid = bc.bookid
                             inner join loans l on bc.bookcopyid = l.bookcopyid
-                            inner join borrowers br on l.borrowerid = br.borrowerid
+                            right join borrowers br on l.borrowerid = br.borrowerid
                             group by br.borrowerid
                             order by count(loanid) desc, borrowerid asc;'''
 #endregion
