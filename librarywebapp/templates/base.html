@@ -17,7 +17,13 @@
 
             <ul>
                 {% block navigation %}{% endblock %}
-                <li><a href="{{ url_for('public_home') }}">Public Portal</a></li>
+                <li>
+                  <a>Portal</a>
+                  <ul>
+                    {% block portal %}{% endblock %}
+                    <a href="{{ url_for('public_home') }}">Public</a>
+                  </ul>  
+                </li>
             </ul>
             <img src="https://img.freepik.com/free-vector/modern-library-with-bookshelf-illustration_1262-16576.jpg?size=626&ext=jpg" style="width:600px;height:200px;">
           </nav>

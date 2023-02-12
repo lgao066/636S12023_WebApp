@@ -18,7 +18,8 @@ Loan List -
         <tr>
             <th scope="col">BorrowerID</th>
             <th scope="col">Name</th>
-            <th scope="col">Num of loans in total</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Num of loans (past and current combined)</th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +28,7 @@ Loan List -
             <td>{{entry[0]}}</td>
             <td>{{entry[1] + " " + entry[2]}}</td>
             <td>{{entry[3]}}</td>
+            <td>{{entry[4]}}</td>
         </tr>
         {% endfor %}
     </tbody>

@@ -59,18 +59,19 @@ sql_list_newly_added_loan = '''SELECT loanid as LoanID, bookcopyid as BookCopyID
                     loandate as LoanDate, returned as Returned FROM library.loans 
                     WHERE bookcopyid = %s and borrowerid = %s and loandate = CURDATE();'''
 
-sql_overdue_books = '''SELECT borrowers.familyname As "Family Name", 
-                    borrowers.firstname As "First Name", 
-                    DATEDIFF(CURDATE(), loandate) As "Days On Loan",
-                    books.booktitle As Title
+sql_overdue_books = '''SELECT borrowers.borrowerid, borrowers.firstname As "First Name", 
+                    borrowers.familyname As "Family Name", 
+                    borrowers.dateofbirth,
+					bookcopies.bookid, books.booktitle As Title,
+                    DATEDIFF(CURDATE(), loandate) As "Days On Loan"
                     FROM loans
                     INNER JOIN borrowers ON loans.borrowerid = borrowers.borrowerid
                     INNER JOIN bookcopies ON loans.bookcopyid = bookcopies.bookcopyid
                     INNER JOIN books ON books.bookid = bookcopies.bookid
                     WHERE returned <> 1 and loandate < DATE_ADD(CURDATE(), INTERVAL -35 DAY)
-                    ORDER BY DATEDIFF(CURDATE(), loandate) desc;'''
+                    ORDER BY borrowers.firstname, borrowers.familyname, Title;'''
 
-sql_most_loaned_books = '''SELECT count(loans.loanid) As "Borrowed Times", b.booktitle as Title, b.author as Author, b.category as Category, b.yearofpublication as Year FROM loans
+sql_most_loaned_books = '''SELECT b.booktitle as Title, b.author as Author, b.category as Category, b.yearofpublication as Year, count(loans.loanid) As "Borrowed Times" FROM loans
                     INNER JOIN bookcopies ON loans.bookcopyid = bookcopies.bookcopyid
                     RIGHT JOIN books b ON b.bookid = bookcopies.bookid
                     group by b.bookid
@@ -85,7 +86,7 @@ sql_borrower_summary_in_detail = '''select br.borrowerid, br.firstname, br.famil
                                     inner join borrowers br on l.borrowerid = br.borrowerid
                                     order by br.familyname, br.firstname, l.loandate;''';
 
-sql_borrower_summary = '''select br.borrowerid, br.firstname, br.familyname, count(loanid) as "Num. of Loans"
+sql_borrower_summary = '''select br.borrowerid, br.firstname, br.familyname, br.dateofbirth, count(loanid) as "Num. of Loans"
                             from books b
                             inner join bookcopies bc on b.bookid = bc.bookid
                             inner join loans l on bc.bookcopyid = l.bookcopyid
@@ -256,7 +257,7 @@ def addloan():
 @app.route("/staff/overdues")
 def overduesummary():
     connection = getCursor()
-    connection.execute(sql_most_loaned_books)
+    connection.execute(sql_overdue_books)
     overduesummary = connection.fetchall()
     return render_template("staffoverdues.html", overduesummary = overduesummary)
 
