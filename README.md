@@ -10,7 +10,7 @@ Steps:
 
 1. Create virtual environment using the following commands
         py -3 -m venv .venv
-        source librarywebapp\\.venv\\Scripts\\activate or navigate to .venv folder and run Scripts\\activate
+        source .venv\\Scripts\\activate or navigate to .venv folder and run Scripts\\activate
 2. Install the packages
         navigate to the main folder 636S12023_WebApp, and run the following command
         pip install -r requirements.txt

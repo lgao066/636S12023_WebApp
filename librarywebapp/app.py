@@ -71,8 +71,8 @@ sql_overdue_books = '''SELECT borrowers.familyname As "Family Name",
                     ORDER BY DATEDIFF(CURDATE(), loandate) desc;'''
 
 sql_most_loaned_books = '''SELECT count(loans.loanid) As "Borrowed Times", b.booktitle as Title, b.author as Author, b.category as Category, b.yearofpublication as Year FROM loans
-                    LEFT JOIN bookcopies ON loans.bookcopyid = bookcopies.bookcopyid
-                    INNER JOIN books b ON b.bookid = bookcopies.bookid
+                    INNER JOIN bookcopies ON loans.bookcopyid = bookcopies.bookcopyid
+                    RIGHT JOIN books b ON b.bookid = bookcopies.bookid
                     group by b.bookid
                     ORDER BY count(loans.loanid) desc;'''
 
@@ -253,7 +253,12 @@ def addloan():
 
 
 # Display a list of all overdue books & their borrowers
-
+@app.route("/staff/overdues")
+def overduesummary():
+    connection = getCursor()
+    connection.execute(sql_most_loaned_books)
+    overduesummary = connection.fetchall()
+    return render_template("staffoverdues.html", overduesummary = overduesummary)
 
 # Display a Loan Summary
 @app.route("/staff/loansummary")
