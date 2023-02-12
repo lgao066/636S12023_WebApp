@@ -1,0 +1,99 @@
+<!-- Name:       Li Gao  -->
+<!-- Student ID: 1155084 -->
+
+{% extends "staffbase.html" %}
+
+{% block title %}
+Return books -
+{% endblock %}
+
+
+{% block content %}
+
+<h3 style="color:SlateBlue;">Return books</h3>
+<hr />
+
+<form id="survey" name="survey" action="/staff/loan/return" method="post">
+
+    <!-- Table of available books or selected book -->
+    <table id="loantable" style="width:70%; border: 1px solid black;" class ="table table-striped table-hover">
+        <thead style="background-color: #96D4D4;">
+            <tr style="color:rgb(12, 0, 0)">
+                <th scope="col">Loan ID</th>
+                <th scope="col">Due Date</th>
+                <th scope="col">Overdue</th>
+                <th scope="col">Names</th>
+                <th scope="col">Book Copy ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loan in loanedbooks %}
+            <tr>
+                <td>{{loan[0]}}</td>
+                <td>{{loan[1]}}</td>
+                <td>{{loan[2]}}</td>
+                <td>{{loan[3] + " " + loan[4]}}</td>
+                <td>{{loan[5]}}</td>
+                <td>{{loan[6]}}</td>
+                <td>{{loan[7]}}</td>
+                <td>{{loan[8]}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <label for="loanid">Loan ID: </label>    
+    <input type="text" name="loanid" id="loanid" style="width: 300px;" placeholder="Please enter a loan Id in the above table"/>
+    <!-- URL for submission (action) of form should be /staff/loan/return -->
+    <button id="btn" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white">Return the book</button>
+
+</form>
+<br />
+
+<script>
+    // Get web elements
+    const btn = document.querySelector('#btn');
+    const loanid = document.querySelector('#loanid')
+
+    btn.onclick = (event) => { 
+        // show the selected index
+        if(loanid.value === "" || isNaN(loanid.value))
+        {
+            event.preventDefault();
+            alert("Oops! Please enter a valid loan ID and try again!");
+            document.getElementById("loanid").value = "";
+        } 
+        else if (validateInput(loanid.value))
+        {
+            event.preventDefault();
+            alert("Oops! Your loan ID entered does not exist. Please check the above table and try again!");
+            document.getElementById("loanid").value = "";
+        }
+        else 
+        {
+            alert("Cool! Your loan has been successfully returned! \n");
+        }
+    };
+
+    function validateInput(inputValue) {
+    // Get the table
+    var table = document.getElementById("loantable");
+    
+    // Loop through all rows in the table
+    for (var i = 0; i < table.rows.length; i++) {
+        // Get the value of the specified column
+        var columnValue = table.rows[i].cells[0].innerHTML;
+        // Compare the input value with the column value
+        if (inputValue == columnValue) {
+        return false;
+        }
+    }
+    // If no match was found, return false
+    return true;
+    }
+</script>
+
+
+{% endblock %}

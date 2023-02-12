@@ -49,15 +49,24 @@ add_new_borrower = '''INSERT INTO borrowers(firstname, familyname, dateofbirth, 
 
 edit_existing_borrower = '''update borrowers SET %s where borrowerid = %s;'''
 
-sql_update_loan = '''INSERT INTO loans(bookcopyid, borrowerid, loandate, returned)
-                    VALUES(%s, %s, CURDATE(), 0);'''
-
-sql_update_loan = '''INSERT INTO loans(bookcopyid, borrowerid, loandate, returned)
-                    VALUES(%s, %s, CURDATE(), 0);'''
+sql_update_loan = '''INSERT INTO loans(bookcopyid, borrowerid, loandate, returned) VALUES(%s, %s, %s, 0);'''
 
 sql_list_newly_added_loan = '''SELECT loanid as LoanID, bookcopyid as BookCopyID, borrowerid AS BorrowerID, 
                     loandate as LoanDate, returned as Returned FROM library.loans 
                     WHERE bookcopyid = %s and borrowerid = %s and loandate = CURDATE();'''
+
+sql_return_loan = '''update loans set returned = 1 where loanid = %s;'''
+
+sql_books_on_loan = '''SELECT loans.loanid, DATE_ADD(loans.loandate, INTERVAL 28 DAY) as "Due Date", 
+                    if(loandate < DATE_ADD(CURDATE(), INTERVAL -35 DAY), "Yes", "No") as "Overdue",
+                    br.firstname, br.familyname,
+                    loans.bookcopyid, books.booktitle, books.author, books.yearofpublication
+                    from loans 
+                    inner join bookcopies on bookcopies.bookcopyid = loans.bookcopyid
+                    inner join books on books.bookid = bookcopies.bookid
+                    inner join borrowers br on loans.borrowerid = br.borrowerid
+                    where (returned <> 1 or returned is NULL)
+                    order by loanid asc;'''
 
 sql_overdue_books = '''SELECT borrowers.borrowerid, borrowers.firstname As "First Name", 
                     borrowers.familyname As "Family Name", 
@@ -239,7 +248,7 @@ def loanbook():
     borrowerList = connection.fetchall()
     connection.execute(avaiable_books_for_borrow)
     bookList = connection.fetchall()
-    return render_template("addloan.html", loandate = todaydate,borrowers = borrowerList, books= bookList)
+    return render_template("staffloanbooks.html", loandate = todaydate,borrowers = borrowerList, books= bookList)
 
 @app.route("/staff/loan/add", methods=["POST"])
 def addloan():
@@ -247,11 +256,23 @@ def addloan():
     bookid = request.form.get('book')
     loandate = request.form.get('loandate')
     cur = getCursor()
-    cur.execute("INSERT INTO loans (borrowerid, bookcopyid, loandate, returned) VALUES(%s,%s,%s,0);",(borrowerid, bookid, str(loandate),))
+    cur.execute(sql_update_loan,(bookid, borrowerid, str(loandate),))
     return redirect("/staff/currentloans")
 
 # Return a book page
+@app.route("/staff/returnbook")
+def returnbook():
+    connection = getCursor()
+    connection.execute(sql_books_on_loan)
+    loanedbooks = connection.fetchall()
+    return render_template("staffreturnbooks.html", loanedbooks = loanedbooks)
 
+@app.route("/staff/loan/return", methods=["POST"])
+def returnloan():
+    loanid = request.form.get('loanid')
+    cur = getCursor()
+    cur.execute(sql_return_loan,(loanid, ))
+    return redirect("/staff/returnbook")
 
 # Display a list of all overdue books & their borrowers
 @app.route("/staff/overdues")
