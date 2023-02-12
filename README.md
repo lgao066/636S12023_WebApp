@@ -66,9 +66,9 @@ Assumptions:
 3. Users can add a loan for a digital copy any time (regardless of whether it is marked as returned or not returned)
 4. All loans have a due date, and can be 'returned', regardless of copy format.
 
-### A discussion that outlines what changes would be required if your application was to support multiple library branches
+### Changes and Feasibility to Support Multiple Library Branches
 
-#### Changes required to database tables (new tables and modifications to existing tables) 
+#### Changes to database tables (new tables and modifications to existing tables) 
 
 1. Library Branch Information Table: This table will store the information of all branches of the library, such as branch name, address, phone number, etc.
 
@@ -78,7 +78,11 @@ Assumptions:
 
 4. Book Inventory Table: This table will store the information about the availability of books in each branch, such as book title, branch name, availability status, etc.
 
-#### Changes required to the design and implementation of your web app.
+Add a new table for library branches, which will store the branch name, address, and other related information.
+Modify the book inventory table to include the branch name column to track which branch has a particular book.
+Add a new column in the book loan related table to store the branch name where the book is checked out.
+
+#### Changes to the web application
 
 1. Branch Selection: A new feature will be added to the web app to allow the users to select the branch from which they want to borrow a book. The app will fetch the data from the "Book Inventory Table" to display the availability of books in the selected branch.
 
@@ -89,6 +93,10 @@ Assumptions:
 4. Branch Report: A new report will be added to the app to display the book inventory of each branch. The report will show the total number of books available, total number of books borrowed, and the total number of books requested in each branch.
 
 5. Member Report: A new report will be added to the app to display the borrowing history of each member. The report will show the books borrowed by the member, the date of borrowing, and the date of return.
+
+Add a new page to add and manage library branches.
+Modify the existing pages to display and manage books based on the selected branch.
+Implement the functionality to transfer books between branches.
 
 ## Error Encountered
 
