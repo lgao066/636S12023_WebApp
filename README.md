@@ -1,14 +1,12 @@
-# Project Title
-
-COMP636 S1 2023 Library Web App 
+# COMP636 S1 2023 Library Web App 
 
 This project is created for COMP636 Summer School 2022 Web Application Final Assessment. A web-based library management system is created for Waikirikiri Library, which can be used to manage books, borrowers and loans.
 
 ## Contact
 
-Author: Li Gao
-Student ID: 1155084
-Email: Li.Gao@lincolnuni.ac.nz
+- Author: Li Gao
+- Student ID: 1155084
+- Email: Li.Gao@lincolnuni.ac.nz
 
 ## Getting Started
 
