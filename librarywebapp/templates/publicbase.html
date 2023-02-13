@@ -9,10 +9,10 @@ Public Portal -
 
 {% block navigation %}
 <li>
-    <a>Books</a>
+    <a>Book</a>
     <ul>
-        <a href="{{ url_for('public_searchbooks') }}">Search a book</a>
-        <a href="{{ url_for('public_listbooks') }}">List all books</a>
+        <a href="{{ url_for('public_listbooks') }}">All books</a>
+        <a href="{{ url_for('public_searchbooks') }}">Search books</a>
     </ul>  
 </li>
 {% endblock %}

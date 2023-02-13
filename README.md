@@ -1,6 +1,9 @@
 # COMP636 S1 2023 Library Web App 
 
-This project is created for COMP636 Summer School 2022 Web Application Final Assessment. A web-based library management system is created for Waikirikiri Library, which can be used to manage books, borrowers and loans.
+This project is created for COMP636 Summer School 2022 Web Application Final Assessment.
+
+## Introduction
+The web-based library management system is a platform for managing books and members for multiple library branches. The system is built using Python, Flask, Bootstrap CSS, and MySQL. The project was initiated to improve the efficiency of library operations, reduce manual work, and provide a convenient way for members to access information about books and their loans.
 
 ## Contact
 
@@ -37,11 +40,27 @@ Steps:
         flask run
         Webapp running on http://127.0.0.1:5000
 
-## Project Report: 
+## Project Report (Part 1): 
 
-### Structure of routes & functions. 
+This project report consists of two sections. The first section focuses on discussing the structure of the web application's routes and functions, as well as the underlying assumptions and design choices made. The second section delves into the proposed changes and feasibility for supporting multiple library branches.
 
-This should be brief, but be sure to indicate how your routes and templates relate to each other and what data is being passed between them, do not just give a list of your routes.
+### Structure of Routes and Functions 
+
+The web application consists of multiple routes that handle different operations such as adding books, members, and branches, managing book loans, and displaying relevant information to the users. The templates are linked to the routes, and the necessary data is passed between them using Flask.
+
+The main routes are:
+
+1. Homepage: This is the landing page of the system and provides links to other pages such as books, members, loans and other related summaries. There are two portals: staff portal and public portal. Staff can navigate between staff portal and public portal; while public users can only see public portal.
+
+2. Books: The group of pages display the list of books available in the library and search books to find out which books are available, whether they are on loan or not (and if they are, when they are due back).
+
+3. Members: The group of pages display the list of members and provide options to add new members and modify existing ones.
+
+4. Loans: The group of pages display the list of books that are checked out by members and provide options to check out and return books.
+
+5. Summary: There are 3 summary pages, which are overdue summary, loan summary and borrower summary.
+
+how your routes and templates relate to each other and what data is being passed between them, do not just give a list of your routes.
 
 Page Template Hiarachy:
 base.html => booklist.html
@@ -66,9 +85,23 @@ Assumptions:
 3. Users can add a loan for a digital copy any time (regardless of whether it is marked as returned or not returned)
 4. All loans have a due date, and can be 'returned', regardless of copy format.
 
-### Changes and Feasibility to Support Multiple Library Branches
+The system assumes that each branch has a unique name and address.
+The books are identified by their ISBN number, which is assumed to be unique for each book.
+Members are identified by their library card number, which is assumed to be unique for each member.
+The system is designed to provide a basic level of functionality and can be enhanced in the future based on the needs of the library.
 
-#### Changes to database tables (new tables and modifications to existing tables) 
+The system assumes that only one branch of the library can be selected at a time and all operations will be performed based on the selected branch.
+The design decision was made to include a branch management page to allow the administrator to add and manage the branches.
+The system is designed to display only the books and members that are related to the selected branch.
+The book loan related table stores the name of the branch where the book is checked out to track the book's location.
+
+The web-based library management system for multiple library branches is a platform that provides a convenient and efficient way for managing books and members for multiple branches. The system is designed to be user-friendly, and the templates are linked to the routes to ensure that the relevant information is displayed to the users. The system can be further enhanced in the future to meet the changing needs of the library.
+
+## Project Report (Part 2): 
+
+Changes and Feasibility to Support Multiple Library Branches
+
+### Changes to database tables (new tables and modifications to existing tables) 
 
 1. Library Branch Information Table: This table will store the information of all branches of the library, such as branch name, address, phone number, etc.
 
@@ -82,7 +115,7 @@ Add a new table for library branches, which will store the branch name, address,
 Modify the book inventory table to include the branch name column to track which branch has a particular book.
 Add a new column in the book loan related table to store the branch name where the book is checked out.
 
-#### Changes to the web application
+### Changes to the web application
 
 1. Branch Selection: A new feature will be added to the web app to allow the users to select the branch from which they want to borrow a book. The app will fetch the data from the "Book Inventory Table" to display the availability of books in the selected branch.
 

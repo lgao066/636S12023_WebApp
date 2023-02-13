@@ -9,10 +9,16 @@ Staff Portal -
 
 {% block navigation %}
 <li>
-    <a>Search</a>
+    <a>Book</a>
     <ul>
-        <a href="{{ url_for('staff_searchbooks') }}">Book</a>
-        <a href="{{ url_for('searchborrowers') }}">Borrower</a>
+        <a href="{{ url_for('staff_listbooks') }}">All books</a>
+        <a href="{{ url_for('staff_searchbooks') }}">Search books</a>
+    </ul>  
+</li>
+<li>
+    <a>Members</a>
+    <ul>
+        <a href="{{ url_for('searchborrowers') }}">Search borrowers</a>
     </ul>  
 </li>
 <li>
@@ -25,7 +31,6 @@ Staff Portal -
 <li>
     <a>Summary</a>
     <ul>
-        <a href="{{ url_for('staff_listbooks') }}">Book</a>
         <a href="{{ url_for('overduesummary') }}">Overdue</a>
         <a href="{{ url_for('loansummary') }}">Loan</a>
         <a href="{{ url_for('currentloans') }}">Borrower</a>
