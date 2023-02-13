@@ -7,7 +7,7 @@
 <li>
     <a>Book</a>
     <ul>
-        <a href="{{ url_for('staff_listbooks') }}">All books</a>
+        <a href="{{ url_for('staff_listbooks') }}">All Books</a>
         <a href="{{ url_for('staff_searchbooks') }}">Search</a>
     </ul>  
 </li>
@@ -15,23 +15,23 @@
     <a>Borrowers</a>
     <ul>
         <a href="{{ url_for('searchborrowers') }}">Search</a>
-        <a href="{{ url_for('addborrowers') }}">Add</a>
-        <a href="{{ url_for('editborrowers') }}">Edit</a>
+        <a href="{{ url_for('viewaddborrowers') }}">Add</a>
+        <a href="{{ url_for('vieweditborrowers') }}">Edit</a>
     </ul>  
 </li>
 <li>
     <a>Loan</a>
     <ul>
-        <a href="{{ url_for('loanbook') }}">Loan books</a>
-        <a href="{{ url_for('returnbook') }}">Return books</a>
+        <a href="{{ url_for('loanbook') }}">Loan Books</a>
+        <a href="{{ url_for('returnbook') }}">Return Books</a>
     </ul>  
 </li>
 <li>
     <a>Report</a>
     <ul>
-        <a href="{{ url_for('overduesummary') }}">Overdue books</a>
-        <a href="{{ url_for('loansummary') }}">Loan summary</a>
-        <a href="{{ url_for('currentloans') }}">Borrower summary</a>
+        <a href="{{ url_for('overduesummary') }}">Overdue Summary</a>
+        <a href="{{ url_for('loansummary') }}">Loan Summary</a>
+        <a href="{{ url_for('currentloans') }}">Borrower Summary</a>
     </ul>  
 </li>
 {% endblock %}

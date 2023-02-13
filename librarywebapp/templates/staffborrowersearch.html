@@ -24,7 +24,7 @@ Search Borrower -
     <br>
     <div class="form-group">
         <label for="borrowerid" style="color:SlateBlue;">Library Card ID (Borrower ID):</label>
-        <input type="text" class="form-control" id="borrowerid" placeholder="Enter library card ID (Borrower ID)" name="borrowerid" style="width:50%" value="{{borrowerid}}">
+        <input type="text" class="form-control" id="borrowerid" placeholder="Enter library card ID (Borrower ID)" name="borrowerid" style="width:50%" value="{{borrowerid}}" onblur="validateborrowerid()">
     </div>
     <br>
     <button type="button" id="reset" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default" onclick="resetForm()">Reset </button>
@@ -38,7 +38,7 @@ Search Borrower -
     //const btn = document.querySelector('#submit');
     //const firstname = document.querySelector('#firstname')
     //const lastname = document.querySelector('#lastname')
-    //const borrowerid = document.querySelector('#borrowerid')
+    const borrowerid = document.querySelector('#borrowerid')
     //btn.onclick = (event) => { 
         // show the selected index
         //if(firstname.value == "" && lastname.value == "" && borrowerid.value == "")
@@ -47,6 +47,13 @@ Search Borrower -
             //alert("Oops! Please enter at least one value for a borrower's firstname, lastname or borrowerid");
         //}
     //};
+
+    function validateborrowerid() {
+        if (!/^\d+$/.test(borrowerid.value)) {
+            alert("Borrower Id entered is non-digits. Please try again!");
+            borrowerid.value = "";
+        }
+    }
 
     // Reset the values entered
     function resetForm() {

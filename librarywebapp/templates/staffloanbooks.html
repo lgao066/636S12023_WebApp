@@ -63,7 +63,6 @@ Loan books -
     <table style="width:70%; border: 1px solid black;" class ="table table-striped table-hover">
         <thead style="background-color: #96D4D4;">
             <tr style="color:rgb(12, 0, 0)">
-                <th scope="col">BookCopyID</th>
                 <th scope="col">Format</th>
                 <th scope="col">Name</th>
                 <th scope="col">Author</th>
@@ -75,7 +74,7 @@ Loan books -
             {% for book in books %}
             <tr>
                 {% for entry in book %}
-                    {% if loop.index0 != 1 and loop.index0 != 3 and loop.index0 != 8%}
+                    {% if loop.index0 != 0 and loop.index0 != 1 and loop.index0 != 3 and loop.index0 != 8%}
                     <td>{{entry}}</td>
                     {% endif %}
                 {% endfor %}

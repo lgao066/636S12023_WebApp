@@ -57,7 +57,7 @@ Edit Borrower -
     <br>
     <div class="form-group">
         <label for="borrowerid" style="color:SlateBlue;">Library Card ID (Borrower ID):</label>
-        <input type="text" class="form-control" id="borrowerid" placeholder="Enter the library card ID of the borrower who you want to edit, leave it blank if you want to add a new one" name="borrowerid" style="width:60%" value="{{borrowerid}}">
+        <input type="text" class="form-control" onblur="validateborrowerid()" id="borrowerid" placeholder="Enter the library card ID of the borrower who you want to edit" name="borrowerid" style="width:40%" value="{{borrowerid}}">
     </div>
     <br>
     <button type="button" id="reset" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white; width: 150px;" class="btn btn-default" onclick="resetForm()">Reset </button>
@@ -65,7 +65,7 @@ Edit Borrower -
     <b for="errormessage" style="color:rgb(205, 90, 90);">{{message}}</b>
 </form>
 <br>
-<form action="{{ url_for('editborrowers') }}">
+<form action="{{ url_for('vieweditborrowers') }}">
     <button type="submit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default">Edit Again</button>
 </form>
 <br>
@@ -106,23 +106,47 @@ Edit Borrower -
         }
     }
 
+    function validateborrowerid() {
+        if (!/^\d+$/.test(borrowerid.value)) {
+            alert("Borrower ID entered is either empty or non-digits. Please try again!");
+            borrowerid.value = "";
+        }
+    }
+
     btn.onclick = (event) => { 
-        // show the selected index
-        if(borrowerid.value == "")
+        // edit mode
+        if(firstname.value == "" && lastname.value == "" && street.value == "" && city.value == "" && postcode.value == "" && town.value == "" && dob.value == "" && housenum.value == ""){
+            event.preventDefault();
+            alert("No new values are entered for editing the borrower. Please try again!");
+        }
+        else if (validateInput(borrowerid.value))
         {
-            // add mode
-            if(firstname.value == "" || lastname.value == "" || dob.value == ""){
-                event.preventDefault();
-                alert("Please enter firstname, lastname and date of birth for the new borrower");
-            }
-        } else {
-            // edit mode
-            if(firstname.value == "" && lastname.value == "" && street.value == "" && city.value == "" && postcode.value == "" && town.value == "" && dob.value == "" && housenum.value == ""){
-                event.preventDefault();
-                alert("No new values are entered for editing the borrower. Please try again!");
-            }
+            event.preventDefault();
+            alert("Oops! Your borrower ID entered does not exist. Please check the following table and try again!");
+            document.getElementById("borrowerid").value = "";
+        }
+        else
+        {
+            alert("Cool! The borrower editing request has been successful!");
         }
     };
+
+    function validateInput(inputValue) {
+    // Get the table
+    var table = document.getElementById("borrowertable");
+    
+    // Loop through all rows in the table
+    for (var i = 0; i < table.rows.length; i++) {
+        // Get the value of the specified column
+        var columnValue = table.rows[i].cells[0].innerHTML;
+        // Compare the input value with the column value
+        if (inputValue == columnValue) {
+        return false;
+        }
+    }
+    // If no match was found, return false
+    return true;
+    }
 
     function resetForm() {
         // get all form elements

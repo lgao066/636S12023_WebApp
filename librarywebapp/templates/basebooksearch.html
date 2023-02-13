@@ -32,7 +32,6 @@ Search Book -
 <table style="width:90%; border: 1px solid black;" class ="table table-striped table-hover">
     <thead style="background-color: #96D4D4;">
         <tr>
-            <th scope="col">BookCopyID</th>
             <th scope="col" style="width:50%">Book Title</th>
             <th scope="col">Author</th>
             <th scope="col">Format</th>
@@ -43,7 +42,6 @@ Search Book -
     <tbody>
         {% for book in booklist %}
         <tr>
-            <td>{{book[0]}}</td>
             <td>{{book[1]}}</td>
             <td>{{book[2]}}</td>
             <td>{{book[3]}}</td>
@@ -65,17 +63,17 @@ Search Book -
 </table>
 
 <script>
-    const btn = document.querySelector('#submit');
-    const auth = document.querySelector('#author')
-    const title = document.querySelector('#title')
-    btn.onclick = (event) => { 
+    //const btn = document.querySelector('#submit');
+    //const auth = document.querySelector('#author')
+    //const title = document.querySelector('#title')
+    //btn.onclick = (event) => { 
         // show the selected index
-        if(auth.value == "" && title.value == "")
-        {
-            event.preventDefault();
-            alert("Oops! Please enter an author and/or a book name and try again!");
-        }
-    };
+        //if(auth.value == "" && title.value == "")
+        //{
+        //    event.preventDefault();
+        //    alert("Oops! Please enter an author and/or a book name and try again!");
+        //}
+    //};
 
     function resetForm() {
     document.getElementById("author").value = "";
