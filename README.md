@@ -65,28 +65,31 @@ There are two portals:
 
 2. Books: The group of pages display the list of books available in the library and search book copies to find out which books are available, whether they are on loan or not (and if they are, when they are due back).
 There are two main pages:
-- basebooklist.html (public/ staff)
+   - basebooklist.html (public/ staff)
 
         Data passed between those two book list pages depend on parameters `navigation` and `portal`.
 
-- basebooksearch.html (public/ staff)
+   - basebooksearch.html (public/ staff)
         
         Data passed between those two book list pages depend on parameters `postcontent`.
 
 3. Members: The group of pages display the list of members and provide options to add new members and modify existing ones.
 There are two main pages both inherit `baseborrower.html`:
-- staffborrowersearch.html
-- staffeditborrower.html
+   - staffborrowersearch.html
+   - staffeditborrower.html
 
         Data passed between those two book list pages depend on parameters `content_borrower_search` and `content_borrower_edit`.
 
 4. Loans: The group of pages display the list of books that are checked out by members and provide options to check out and return books.
 There are two main pages both inherit `staffbase.html`:
-- staffreturnbooks.html
-- staffloanbooks.html
+   - staffreturnbooks.html
+   - staffloanbooks.html
         Data passed between those two book list pages depend on parameters `books` and `loanedbooks`.
 
-5. Summary: There are 3 summary pages, which are overdue summary, loan summary and borrower summary.
+5. Summary: There are 3 summary pages, which are overdue summary, loan summary and borrower summary. All of them inherit `staffbase.html`.
+   - staffoverdues.html
+   - staffborrowersummary.html
+   - staffloansummary.html
 
 how your routes and templates relate to each other and what data is being passed between them, do not just give a list of your routes.
 
