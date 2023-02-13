@@ -301,5 +301,10 @@ def currentloans():
     return render_template("staffborrowersummary.html", loanlist = detailedloanList, borrowersummary = borrowersummary)
 #endregion
 
+# 404 page
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 if __name__=="__app__":
     app.run(debug=True)
