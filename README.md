@@ -64,18 +64,7 @@ how your routes and templates relate to each other and what data is being passed
 
 Page Template Hiarachy:
 
-![alt text](flow.png)
-
-base.html => booklist.html
-
-          => basebooksearch.html => publicsearch.html
-                                 => staffsearch.html
-
-          => publicbase.html
-
-          => staffbase.html      => addloan.html
-                                 => borowerlist.html
-                                 => currentloans.html
+![Page Template Hiarachy](resource\flow.png)
 
 ### Assumptions and Design Decisions
 
