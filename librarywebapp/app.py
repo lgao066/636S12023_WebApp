@@ -194,7 +194,7 @@ def editborrowers():
     return listborrowers("staffeditborrower.html")
 
 @app.route("/staff/addborrowers")
-def editborrowers():
+def addborrowers():
     return listborrowers("staffaddborrower.html")
 
 @app.route("/staff/addborrowers", methods=["POST"])
