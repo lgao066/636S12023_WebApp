@@ -3,7 +3,10 @@
 This project is created for COMP636 Summer School 2022 Web Application Final Assessment.
 
 ## Introduction
-The web-based library management system is a platform for managing books and members for multiple library branches. The system is built using Python, Flask, Bootstrap CSS, and MySQL. The project was initiated to improve the efficiency of library operations, reduce manual work, and provide a convenient way for members to access information about books and their loans.
+The web-based library management system is a platform for managing books and members for multiple library branches. The system is built using Python, Flask, Bootstrap CSS, and MySQL. This project is created for a small community library and has only two interfaces:
+
+1. The first, not requiring any identifying information to be entered, should allow borrowers to search the catalogue to find out which books are available, if they are on loan or not (and if they are when they are due back)
+2. The second interface is focused on library staff, allowing them to issue books to borrowers and return books that have been on loan. The project was designed to be simple enough for any user to understand how it works without any training. Some functionality is repeated on different pages for a user convenience.
 
 ---
 
@@ -113,8 +116,9 @@ Please refer to the following page template hiarachy:
 2. Physical copies: Hardcover, Paperback, Illustrated; Digital copies: eBooks, Audio Books.
 3. Users cannot add a loan for a non-digital copy when another borrower still has that copy.
 4. Members are identified by their library card number (borrower id), which is assumed to be unique for each member.
-5. Users can add a loan for a digital copy any time (regardless of whether it is marked as returned or not returned)
+5. Users can add a loan for a digital copy any time (regardless of whether it is marked as returned or not returned).
 6. All loans have a due date, and can be 'returned', regardless of copy format.
+7. Non-admin users won’t be accessing “/staff” page and admin/staff know how to access this page.
 
 #### I made design decisions below:
 
