@@ -1,5 +1,6 @@
-# COMP636 S1 2023 Library Web App 
+# COMP636 S1 2023 Library Web App
 
+![logo](resource/logo.png)
 This project is created for COMP636 Summer School 2022 Web Application Final Assessment.
 
 ## Introduction
@@ -33,18 +34,18 @@ Code management - Code is stored in different locations
 
 Steps:
 
-0. Navigate to folder 636S12023_WebApp
+1. Navigate to folder 636S12023_WebApp
 
-1. Create virtual environment using the following commands
+2. Create virtual environment using the following commands
         py -3 -m venv .venv
         .venv\\Scripts\\activate or navigate to .venv folder and run Scripts\\activate
-2. Install the packages
+3. Install the packages
         navigate to the main folder 636S12023_WebApp, and run the following command
         pip install -r requirements.txt
 
-3. Use the virtualenv as python interpreter (otherwise not able to pick up the packages installed inside this virtualenv)
+4. Use the virtualenv as python interpreter (otherwise not able to pick up the packages installed inside this virtualenv)
 
-4. Navigate to folder librarywebapp (where app.py is located), and run the following commands
+5. Navigate to folder librarywebapp (where app.py is located), and run the following commands
         flask run
         Webapp running on http://127.0.0.1:5000
 
