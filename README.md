@@ -127,18 +127,18 @@ The library web app was initially designed to provide a basic level of functiona
 
 ### Changes to database tables (new tables and modifications to existing tables) 
 
-1. Library Branch Information Table: This table will store the information of all branches of the library, such as branch name, address, phone number, etc.
+1. Library Branch Information Table (*New*): This table will store the information of all branches of the library, such as branch name, address, phone number, etc. The primary key is `branchid`, which will be the foreign keys in other related tables.
 
-2. Book Information Table: This table will store the information of all books available in the library, such as book title, author, ISBN number, publication date, etc.
+2. Book Information Table `library.books` (*No change*): This table will store the information of all books available in the library, such as book title, author, publication date, etc.
 
-3. Member Information Table: This table will store the information of all members who have registered with the library, such as member name, address, phone number, etc.
+3. Member Information Table `library.borrowers` (*Modified*): This table will store the information of all members who have registered with the library, such as member name, address, phone number, etc.
+    - Changes: Modify the menber information table to include the `branchid` column to track which branch is the primary branch for each member.
 
-4. Book Inventory Table: This table will store the information about the availability of books in each branch, such as book title, branch name, availability status, etc.
+4. Book Inventory Table `library.bookcopies` (*Modified*): This table will store the information about the availability of books in each branch, such as book title, branch name, availability status, etc. 
+    - Changes: Modify the book inventory table to include the `branchid` column to track which branch has a particular book.
 
-The book loan related table stores the name of the branch where the book is checked out to track the book's location.
-Add a new table for library branches, which will store the branch name, address, and other related information.
-Modify the book inventory table to include the branch name column to track which branch has a particular book.
-Add a new column in the book loan related table to store the branch name where the book is checked out.
+4. Book Loan Table `library.loans` (*Modified*): This table will store the information about the availability of books in each branch, such as book title, branch name, availability status, etc.
+    - Changes: Modify the book loan table to include the `branchid` column where the book is checked out to track the book's location.
 
 ### Changes to the web application
 
