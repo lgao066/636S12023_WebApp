@@ -65,60 +65,62 @@ There are two portals:
 
 2. Books: The group of pages display the list of books available in the library and search book copies to find out which books are available, whether they are on loan or not (and if they are, when they are due back).
 There are two main pages:
-   - basebooklist.html (public/ staff)
+   - `basebooklist.html` (public/ staff)
 
         Data passed between those two book list pages depend on parameters `navigation` and `portal`.
 
-   - basebooksearch.html (public/ staff)
+   - `basebooksearch.html` (public/ staff)
         
         Data passed between those two book list pages depend on parameters `postcontent`.
 
 3. Members: The group of pages display the list of members and provide options to add new members and modify existing ones.
 There are two main pages both inherit `baseborrower.html`:
-   - staffborrowersearch.html
-   - staffeditborrower.html
+   - `staffborrowersearch.html`
+   - `staffeditborrower.html`
 
         Data passed between those two book list pages depend on parameters `content_borrower_search` and `content_borrower_edit`.
 
 4. Loans: The group of pages display the list of books that are checked out by members and provide options to check out and return books.
 There are two main pages both inherit `staffbase.html`:
-   - staffreturnbooks.html
-   - staffloanbooks.html
+   - `staffreturnbooks.html`
+   - `staffloanbooks.html`
         Data passed between those two book list pages depend on parameters `books` and `loanedbooks`.
 
 5. Summary: There are 3 summary pages, which are overdue summary, loan summary and borrower summary. All of them inherit `staffbase.html`.
-   - staffoverdues.html
-   - staffborrowersummary.html
-   - staffloansummary.html
+   - `staffoverdues.html`
+   - `staffborrowersummary.html`
+   - `staffloansummary.html`
 
-how your routes and templates relate to each other and what data is being passed between them, do not just give a list of your routes.
-
-Page Template Hiarachy:
+Please refer to the following page template hiarachy:
 
 ![Page Template Hiarachy](resource/flow.png)
 
 ### Assumptions and Design Decisions
 
-For example, did you share a page template between public and staff or use two separate pages? Did you detect GET or POST method to determine what page displays? If so, how and why? Note these types of decisions and assumptions as you work.
+#### I followed assumptions and requirements below:
 
-Assumptions:
+1. The books are identified by their book copy id, which is assumed to be unique for each book. 
+2. Physical copies: Hardcover, Paperback, Illustrated; Digital copies: eBooks, Audio Books.
+3. Users cannot add a loan for a non-digital copy when another borrower still has that copy.
+4. Members are identified by their library card number (borrower id), which is assumed to be unique for each member.
+5. Users can add a loan for a digital copy any time (regardless of whether it is marked as returned or not returned)
+6. All loans have a due date, and can be 'returned', regardless of copy format.
 
-1. Physical copies: Hardcover, Paperback, Illustrated; Digital copies (eBooks, Audio Books).
-2. Users cannot add a loan for a non-digital copy when another borrower still has that copy (I cannot borrow a particular paperback when another borrower still has it at her house).
-3. Users can add a loan for a digital copy any time (regardless of whether it is marked as returned or not returned)
-4. All loans have a due date, and can be 'returned', regardless of copy format.
+#### I made design decisions below:
+
+1. Page templates are shared and used between public and staff. For instance, `publicbooksearch.html` and `staffbooksearch.html` share the same template `basebooksearch.html`. Because those pages are basically the same and the navigation panel is the only difference, it increases reusability of code using a template. Similar decisions have been made in borrower search and edit pages, etc. 
+2. If a page might both GET or POST method, I use the same page to display both actions. Examples like book search page `publicbooksearch.html` and member search page `staffborrowersearch.html`. This is because even with different GET or POST method, they are basically displaying the same content with not much difference. GET method retrives all records in the database, while the POST method does a search and retrives the matched records in the database.
+
+
+
+The web-based library management system for multiple library branches is a platform that provides a convenient and efficient way for managing books and members for multiple branches. The system is designed to be user-friendly, and the templates are linked to the routes to ensure that the relevant information is displayed to the users. The system can be further enhanced in the future to meet the changing needs of the library.
 
 The system assumes that each branch has a unique name and address.
-The books are identified by their ISBN number, which is assumed to be unique for each book.
-Members are identified by their library card number, which is assumed to be unique for each member.
 The system is designed to provide a basic level of functionality and can be enhanced in the future based on the needs of the library.
-
 The system assumes that only one branch of the library can be selected at a time and all operations will be performed based on the selected branch.
 The design decision was made to include a branch management page to allow the administrator to add and manage the branches.
 The system is designed to display only the books and members that are related to the selected branch.
 The book loan related table stores the name of the branch where the book is checked out to track the book's location.
-
-The web-based library management system for multiple library branches is a platform that provides a convenient and efficient way for managing books and members for multiple branches. The system is designed to be user-friendly, and the templates are linked to the routes to ensure that the relevant information is displayed to the users. The system can be further enhanced in the future to meet the changing needs of the library.
 
 ---
 
