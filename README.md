@@ -54,6 +54,7 @@ The main routes are:
 There are two portals:
 - staff portal (Staff can navigate between staff portal and public portal; Staff menu is displayed including menber/loan/report pages)
 - public portal (Public users can only see public portal; only public menu is displayed like book search)
+
 Data passed between those two home pages mainly depend on parameters `navigation` and `portal`.
 
 2. Books: The group of pages display the list of books available in the library and search books to find out which books are available, whether they are on loan or not (and if they are, when they are due back).
