@@ -140,6 +140,10 @@ The library web app was initially designed to provide a basic level of functiona
 4. Book Loan Table `library.loans` (*Modified*): This table will store the information about the availability of books in each branch, such as book title, branch name, availability status, etc.
     - Changes: Modify the book loan table to include the `branchid` column where the book is checked out to track the book's location.
 
+Refer to the following page for the proposed database structure:
+
+![Proposed database structure](resource/database.png)
+
 ### Changes to the web application
 
 1. Branch Selection: A new feature will be added to the web app to allow the users to select the branch from which they want to borrow a book. The app will fetch the data from the "Book Inventory Table" to display the availability of books in the selected branch.
