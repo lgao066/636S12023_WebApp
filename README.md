@@ -64,7 +64,7 @@ how your routes and templates relate to each other and what data is being passed
 
 Page Template Hiarachy:
 
-![Page Template Hiarachy](resource\flow.png)
+![Page Template Hiarachy](resource/flow.png)
 
 ### Assumptions and Design Decisions
 
