@@ -58,8 +58,8 @@ The main routes are:
 
 1. Homepage: This is the landing page of the system and provides links to other pages such as books, members, loans and other related summaries. 
 There are two portals:
-⋅⋅⋅- staff portal (Staff can navigate between staff portal and public portal; Staff menu is displayed including menber/loan/report pages)
-⋅⋅⋅- public portal (Public users can only see public portal; only public menu is displayed like book search)
+   - staff portal (Staff can navigate between staff portal and public portal; Staff menu is displayed including menber/loan/report pages)
+   - public portal (Public users can only see public portal; only public menu is displayed like book search)
 
         Data passed between those two home pages mainly depend on parameters `navigation` and `portal`.
 
@@ -81,6 +81,10 @@ There are two main pages both inherit `baseborrower.html`:
         Data passed between those two book list pages depend on parameters `content_borrower_search` and `content_borrower_edit`.
 
 4. Loans: The group of pages display the list of books that are checked out by members and provide options to check out and return books.
+There are two main pages both inherit `staffbase.html`:
+- staffreturnbooks.html
+- staffloanbooks.html
+        Data passed between those two book list pages depend on parameters `books` and `loanedbooks`.
 
 5. Summary: There are 3 summary pages, which are overdue summary, loan summary and borrower summary.
 
