@@ -46,7 +46,7 @@ Steps:
 
 ---
 
-## Project Report (Part 1): 
+## Project Report (Part 1) - Structure, Assumption and Design: 
 
 This project report consists of two sections. The first section focuses on discussing the structure of the web application's routes and functions, as well as the underlying assumptions and design choices made. The second section delves into the proposed changes and feasibility for supporting multiple library branches.
 
@@ -111,22 +111,19 @@ Please refer to the following page template hiarachy:
 1. Page templates are shared and used between public and staff. For instance, `publicbooksearch.html` and `staffbooksearch.html` share the same template `basebooksearch.html`. Because those pages are basically the same and the navigation panel is the only difference, it increases reusability of code using a template. Similar decisions have been made in borrower search and edit pages, etc. 
 2. If a page might both GET or POST method, I use the same page to display both actions. Examples like book search page `publicbooksearch.html` and member search page `staffborrowersearch.html`. This is because even with different GET or POST method, they are basically displaying the same content with not much difference. GET method retrives all records in the database, while the POST method does a search and retrives the matched records in the database.
 
-
-
-The web-based library management system for multiple library branches is a platform that provides a convenient and efficient way for managing books and members for multiple branches. The system is designed to be user-friendly, and the templates are linked to the routes to ensure that the relevant information is displayed to the users. The system can be further enhanced in the future to meet the changing needs of the library.
-
-The system assumes that each branch has a unique name and address.
-The system is designed to provide a basic level of functionality and can be enhanced in the future based on the needs of the library.
-The system assumes that only one branch of the library can be selected at a time and all operations will be performed based on the selected branch.
-The design decision was made to include a branch management page to allow the administrator to add and manage the branches.
-The system is designed to display only the books and members that are related to the selected branch.
-The book loan related table stores the name of the branch where the book is checked out to track the book's location.
-
 ---
 
-## Project Report (Part 2): 
+## Project Report (Part 2) - Changes and Feasibility to Support Multiple Library Branches: 
 
-Changes and Feasibility to Support Multiple Library Branches
+The library web app was initially designed to provide a basic level of functionality and can be enhanced in the future based on the needs of the library. The second section of the project report will discuss the proposed changes and feasibility for supporting multiple library branches based on the current implementation.
+
+### Assumptions
+   - The system assumes that each branch has a unique name and address.
+   - The system assumes that only one branch of the library can be selected at a time and all operations will be performed based on the selected branch.
+
+### Design decisions
+   - The design decision was made to include a branch management page to allow the administrator to add and manage the branches.
+   - The system is designed to display only the books and members that are related to the selected branch.
 
 ### Changes to database tables (new tables and modifications to existing tables) 
 
@@ -138,6 +135,7 @@ Changes and Feasibility to Support Multiple Library Branches
 
 4. Book Inventory Table: This table will store the information about the availability of books in each branch, such as book title, branch name, availability status, etc.
 
+The book loan related table stores the name of the branch where the book is checked out to track the book's location.
 Add a new table for library branches, which will store the branch name, address, and other related information.
 Modify the book inventory table to include the branch name column to track which branch has a particular book.
 Add a new column in the book loan related table to store the branch name where the book is checked out.
