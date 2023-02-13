@@ -58,8 +58,8 @@ The main routes are:
 
 1. Homepage: This is the landing page of the system and provides links to other pages such as books, members, loans and other related summaries. 
 There are two portals:
---- staff portal (Staff can navigate between staff portal and public portal; Staff menu is displayed including menber/loan/report pages)
---- public portal (Public users can only see public portal; only public menu is displayed like book search)
+⋅⋅⋅- staff portal (Staff can navigate between staff portal and public portal; Staff menu is displayed including menber/loan/report pages)
+⋅⋅⋅- public portal (Public users can only see public portal; only public menu is displayed like book search)
 
         Data passed between those two home pages mainly depend on parameters `navigation` and `portal`.
 
