@@ -63,6 +63,10 @@ The main routes are:
 how your routes and templates relate to each other and what data is being passed between them, do not just give a list of your routes.
 
 Page Template Hiarachy:
+
+![alt text](image.jpg)
+![alt text](image.jpg)
+
 base.html => booklist.html
 
           => basebooksearch.html => publicsearch.html
