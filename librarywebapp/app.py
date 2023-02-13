@@ -51,10 +51,6 @@ edit_existing_borrower = '''update borrowers SET %s where borrowerid = %s;'''
 
 sql_update_loan = '''INSERT INTO loans(bookcopyid, borrowerid, loandate, returned) VALUES(%s, %s, %s, 0);'''
 
-sql_list_newly_added_loan = '''SELECT loanid as LoanID, bookcopyid as BookCopyID, borrowerid AS BorrowerID, 
-                    loandate as LoanDate, returned as Returned FROM library.loans 
-                    WHERE bookcopyid = %s and borrowerid = %s and loandate = CURDATE();'''
-
 sql_return_loan = '''update loans set returned = 1 where loanid = %s;'''
 
 sql_books_on_loan = '''SELECT loans.loanid, DATE_ADD(loans.loandate, INTERVAL 28 DAY) as "Due Date", 
@@ -107,7 +103,7 @@ sql_borrower_summary = '''select br.borrowerid, br.firstname, br.familyname, br.
 
 def listbooks(page = "publicbooklist.html"):
     connection = getCursor()
-    connection.execute("SELECT books.booktitle, books.author, books.category, books.yearofpublication, books.description FROM library.books;")
+    connection.execute("SELECT booktitle, author, category, yearofpublication, description FROM books;")
     bookList = connection.fetchall()
     print(bookList)
     return render_template(page, booklist = bookList)
