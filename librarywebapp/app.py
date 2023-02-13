@@ -98,12 +98,14 @@ sql_borrower_summary = '''select br.borrowerid, br.firstname, br.familyname, br.
                             right join borrowers br on l.borrowerid = br.borrowerid
                             group by br.borrowerid
                             order by count(loanid) desc, borrowerid asc;'''
+
+sql_books_all = '''SELECT booktitle, author, category, yearofpublication, description FROM books;'''
 #endregion
 
 
 def listbooks(page = "publicbooklist.html"):
     connection = getCursor()
-    connection.execute("SELECT booktitle, author, category, yearofpublication, description FROM books;")
+    connection.execute(sql_books_all)
     bookList = connection.fetchall()
     print(bookList)
     return render_template(page, booklist = bookList)
