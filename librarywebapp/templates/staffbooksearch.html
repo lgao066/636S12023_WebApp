@@ -8,13 +8,14 @@
     <a>Book</a>
     <ul>
         <a href="{{ url_for('staff_listbooks') }}">All books</a>
-        <a href="{{ url_for('staff_searchbooks') }}">Search books</a>
+        <a href="{{ url_for('staff_searchbooks') }}">Search</a>
     </ul>  
 </li>
 <li>
-    <a>Members</a>
+    <a>Borrowers</a>
     <ul>
-        <a href="{{ url_for('searchborrowers') }}">Search borrowers</a>
+        <a href="{{ url_for('searchborrowers') }}">Search</a>
+        <a href="{{ url_for('editborrowers') }}">Add/Edit</a>
     </ul>  
 </li>
 <li>
@@ -25,11 +26,11 @@
     </ul>  
 </li>
 <li>
-    <a>Summary</a>
+    <a>Report</a>
     <ul>
-        <a href="{{ url_for('overduesummary') }}">Overdue</a>
-        <a href="{{ url_for('loansummary') }}">Loan</a>
-        <a href="{{ url_for('currentloans') }}">Borrower</a>
+        <a href="{{ url_for('overduesummary') }}">Overdue books</a>
+        <a href="{{ url_for('loansummary') }}">Loan summary</a>
+        <a href="{{ url_for('currentloans') }}">Borrower summary</a>
     </ul>  
 </li>
 {% endblock %}

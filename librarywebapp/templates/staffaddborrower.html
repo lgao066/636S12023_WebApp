@@ -4,11 +4,11 @@
 {% extends "baseborrower.html" %}
 
 {% block title %}
-Edit Borrower -
+Add Borrower -
 {% endblock %}
 
 {% block content_borrower_edit %}
-<h4 style="color:SlateBlue;">Edit borrowers in our library</h4>
+<h4 style="color:SlateBlue;">Add borrowers in our library</h4>
 <hr />
 
 <form class="form-inline" id="editborrower" name="editborrower" action="/staff/editborrowers" method="post">
@@ -55,18 +55,13 @@ Edit Borrower -
         </fieldset>
     </div>
     <br>
-    <div class="form-group">
-        <label for="borrowerid" style="color:SlateBlue;">Library Card ID (Borrower ID):</label>
-        <input type="text" class="form-control" id="borrowerid" placeholder="Enter the library card ID of the borrower who you want to edit, leave it blank if you want to add a new one" name="borrowerid" style="width:60%" value="{{borrowerid}}">
-    </div>
-    <br>
     <button type="button" id="reset" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white; width: 150px;" class="btn btn-default" onclick="resetForm()">Reset </button>
-    <button type="submit" id="submit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white; width: 150px;" class="btn btn-default">Edit</button>
+    <button type="submit" id="submit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white; width: 150px;" class="btn btn-default">Add</button>
     <b for="errormessage" style="color:rgb(205, 90, 90);">{{message}}</b>
 </form>
 <br>
 <form action="{{ url_for('editborrowers') }}">
-    <button type="submit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default">Edit Again</button>
+    <button type="submit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default">Add Again</button>
 </form>
 <br>
 

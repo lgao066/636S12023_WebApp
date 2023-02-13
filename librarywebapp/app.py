@@ -193,8 +193,58 @@ def searchborrowers():
 def editborrowers():
     return listborrowers("staffeditborrower.html")
 
+@app.route("/staff/addborrowers")
+def editborrowers():
+    return listborrowers("staffaddborrower.html")
+
+@app.route("/staff/addborrowers", methods=["POST"])
+def addborrowers():
+    borrowerid = convert_to_string_stripped(request.form.get('borrowerid'))
+    firstname = convert_to_string_stripped(request.form.get('firstname'))
+    lastname = convert_to_string_stripped(request.form.get('lastname'))
+    dob = convert_to_string_stripped(request.form.get('dob'))
+    housenum = convert_to_string_stripped(request.form.get('housenum'))
+    street = convert_to_string_stripped(request.form.get('street'))
+    town = convert_to_string_stripped(request.form.get('town'))
+    city = convert_to_string_stripped(request.form.get('city'))
+    postcode = convert_to_string_stripped(request.form.get('postcode'))
+
+    borrowerdict = {
+        "firstname": firstname,
+        "familyname": lastname,
+        "dateofbirth": dob,
+        "housenumbername": housenum,
+        "street": street,
+        "town": town,
+        "city": city,
+        "postalcode": postcode
+    }
+    
+    message = ""
+    connection = getCursor()
+    if borrowerid == "":
+        connection.execute(add_new_borrower, (firstname, lastname, dob, housenum, street, town, city, postcode, ))
+    else:
+        # Validate if the borrowerId is valid
+        sqlborrowerid = "borrowerid = " + borrowerid
+        sql = search_available_borrowers % ("'%%'", "'%%'", sqlborrowerid,)
+        connection.execute(sql)
+        borrower = connection.fetchall()
+        if (len(borrower) == 0):
+            # borrower trying to edit is not valid
+            message = "The current borrower is not found. Please try again!"
+            print("error message")
+        else:
+            sql_set_value = ""
+            for key in borrowerdict:
+                if (borrowerdict[key] != ""): # value to update
+                    sql_set_value = sql_set_value + key + " = '" + borrowerdict[key] + "',"
+            sql_update = edit_existing_borrower % (sql_set_value[:-1], borrowerid,)
+            connection.execute(sql_update)
+    return listeditoraddborrowers("staffeditborrower.html", message = message)
+
 @app.route("/staff/editborrowers", methods=["POST"])
-def editoraddborrowers():
+def editborrowers():
     borrowerid = convert_to_string_stripped(request.form.get('borrowerid'))
     firstname = convert_to_string_stripped(request.form.get('firstname'))
     lastname = convert_to_string_stripped(request.form.get('lastname'))

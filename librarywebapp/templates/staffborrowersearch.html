@@ -31,12 +31,10 @@ Search Borrower -
     <button type="submit" id="submit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default">Search</button>
 </form>
 <br>
-<form action="{{ url_for('editborrowers') }}">
-    <button type="submit" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white" class="btn btn-default">Edit or Add Borrowers</button>
-</form>
-<br>
 
 <script>
+    // Comment this part out to allow search without a keyword or Library Card ID
+
     //const btn = document.querySelector('#submit');
     //const firstname = document.querySelector('#firstname')
     //const lastname = document.querySelector('#lastname')
@@ -50,6 +48,7 @@ Search Borrower -
         //}
     //};
 
+    // Reset the values entered
     function resetForm() {
     document.getElementById("firstname").value = "";
     document.getElementById("lastname").value = "";
