@@ -64,8 +64,7 @@ how your routes and templates relate to each other and what data is being passed
 
 Page Template Hiarachy:
 
-![alt text](image.jpg)
-![alt text](image.jpg)
+![alt text](flow.png)
 
 base.html => booklist.html
 
