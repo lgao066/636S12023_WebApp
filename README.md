@@ -1,6 +1,7 @@
 # COMP636 S1 2023 Library Web App
 
 ![logo](resource/logo.png)
+
 This project is created for COMP636 Summer School 2022 Web Application Final Assessment.
 
 ## Introduction
