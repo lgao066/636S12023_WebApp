@@ -20,6 +20,13 @@ The web-based library management system is a platform for managing books and mem
 
 ---
 
+## Demo Sites
+
+- Public access - http://ligao2022.pythonanywhere.com/
+- Staff access - http://ligao2022.pythonanywhere.com/staff
+
+---
+
 ## Getting Started
 
 Instructions on how to install and set up the project on a local machine for development and testing purposes.
