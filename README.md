@@ -61,13 +61,18 @@ There are two portals:
 There are two main pages:
 - basebooklist.html (public/ staff)
 
-        Data passed between those two book list pages mainly depend on parameters `navigation` and `portal`.
+        Data passed between those two book list pages depend on parameters `navigation` and `portal`.
 
 - basebooksearch.html (public/ staff)
         
-        Data passed between those two book list pages mainly depend on parameters `postcontent`.
+        Data passed between those two book list pages depend on parameters `postcontent`.
 
 3. Members: The group of pages display the list of members and provide options to add new members and modify existing ones.
+There are two main pages both inherit `baseborrower.html`:
+- staffborrowersearch.html
+- staffeditborrower.html
+
+        Data passed between those two book list pages depend on parameters `content_borrower_search` and `content_borrower_edit`.
 
 4. Loans: The group of pages display the list of books that are checked out by members and provide options to check out and return books.
 
