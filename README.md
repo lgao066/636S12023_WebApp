@@ -29,6 +29,7 @@ Code management - Code is stored in different locations
 ### Installation
 
 Steps:
+
 0. Navigate to folder 636S12023_WebApp
 
 1. Create virtual environment using the following commands
