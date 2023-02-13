@@ -99,7 +99,9 @@ sql_borrower_summary = '''select br.borrowerid, br.firstname, br.familyname, br.
                             group by br.borrowerid
                             order by count(loanid) desc, borrowerid asc;'''
 
-sql_books_all = '''SELECT booktitle, author, category, yearofpublication, description FROM books;'''
+sql_books_all = '''SELECT booktitle, author, category, yearofpublication, description 
+                    FROM bookcopies Right join books on books.bookid = bookcopies.bookid
+                    group by books.bookid;'''
 #endregion
 
 
