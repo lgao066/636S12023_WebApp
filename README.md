@@ -5,11 +5,15 @@ This project is created for COMP636 Summer School 2022 Web Application Final Ass
 ## Introduction
 The web-based library management system is a platform for managing books and members for multiple library branches. The system is built using Python, Flask, Bootstrap CSS, and MySQL. The project was initiated to improve the efficiency of library operations, reduce manual work, and provide a convenient way for members to access information about books and their loans.
 
+---
+
 ## Contact
 
 - Author: Li Gao
 - Student ID: 1155084
 - Email: Li.Gao@lincolnuni.ac.nz
+
+---
 
 ## Getting Started
 
@@ -39,6 +43,8 @@ Steps:
 4. Navigate to folder librarywebapp (where app.py is located), and run the following commands
         flask run
         Webapp running on http://127.0.0.1:5000
+
+---
 
 ## Project Report (Part 1): 
 
@@ -106,6 +112,8 @@ The system is designed to display only the books and members that are related to
 The book loan related table stores the name of the branch where the book is checked out to track the book's location.
 
 The web-based library management system for multiple library branches is a platform that provides a convenient and efficient way for managing books and members for multiple branches. The system is designed to be user-friendly, and the templates are linked to the routes to ensure that the relevant information is displayed to the users. The system can be further enhanced in the future to meet the changing needs of the library.
+
+---
 
 ## Project Report (Part 2): 
 
