@@ -51,13 +51,21 @@ The web application consists of multiple routes that handle different operations
 The main routes are:
 
 1. Homepage: This is the landing page of the system and provides links to other pages such as books, members, loans and other related summaries. 
-        There are two portals:
+There are two portals:
 - staff portal (Staff can navigate between staff portal and public portal; Staff menu is displayed including menber/loan/report pages)
 - public portal (Public users can only see public portal; only public menu is displayed like book search)
 
         Data passed between those two home pages mainly depend on parameters `navigation` and `portal`.
 
-2. Books: The group of pages display the list of books available in the library and search books to find out which books are available, whether they are on loan or not (and if they are, when they are due back).
+2. Books: The group of pages display the list of books available in the library and search book copies to find out which books are available, whether they are on loan or not (and if they are, when they are due back).
+There are two main pages:
+- basebooklist.html (public/ staff)
+
+        Data passed between those two book list pages mainly depend on parameters `navigation` and `portal`.
+
+- basebooksearch.html (public/ staff)
+        
+        Data passed between those two book list pages mainly depend on parameters `postcontent`.
 
 3. Members: The group of pages display the list of members and provide options to add new members and modify existing ones.
 
