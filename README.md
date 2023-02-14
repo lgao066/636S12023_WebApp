@@ -78,7 +78,7 @@ Please contact the author on how to contribute to the project.
 
 ## Acknowledgments
 
-List of people or projects that inspired or helped you in the development of the project.
+List of people that inspired or helped in the development of the project.
 - Stuart Charters
 - Computing tutor team (Sharon Long, Craig, Nathan, and Simon)
 
