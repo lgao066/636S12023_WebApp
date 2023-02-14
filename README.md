@@ -159,6 +159,8 @@ Please refer to the following page template hiarachy:
 
 2. To streamline the user experience and simplify the codebase, pages that may receive either `GET` or `POST` method requests are handled using a single page. For instance, both book search page `publicbooksearch.html` and member search page `staffborrowersearch.html` utilize the same page to display results. This is because there is little difference between the content displayed, regardless of the request method used. The GET method retrieves all records in the database, while the POST method performs a search and returns only the matched records.
 
+3. To properly handle unexpected pages, added a 404 error page when a user accessing a non-existing page.
+
 ---
 
 ## Project Report (Part 2) - Changes and Feasibility to Support Multiple Library Branches: 
