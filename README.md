@@ -14,10 +14,10 @@ This project is created for COMP636 Summer School 2022 Web Application Final Ass
 ---
 
 ## Introduction
-The web-based library management system is a platform for managing books and members for multiple library branches. The system is built using Python, Flask, Bootstrap CSS, and MySQL. This project is created for a small community library and has only two interfaces:
+The web-based library management system is a platform for managing books, loans and members. The system is built using Python, Flask, Bootstrap CSS, and MySQL. It is created for a small community library and has only two interfaces:
 
 1. The first, not requiring any identifying information to be entered, should allow borrowers to search the catalogue to find out which books are available, if they are on loan or not (and if they are when they are due back)
-2. The second interface is focused on library staff, allowing them to issue books to borrowers and return books that have been on loan. The project was designed to be simple enough for any user to understand how it works without any training. Some functionality is repeated on different pages for a user convenience.
+2. The second interface is focused on library staff, allowing them to issue books to borrowers and return books that have been on loan. The project was designed to be simple enough for any user to understand how it works without any training. Some functionality is repeated on different pages for user convenience.
 
 ---
 
@@ -47,26 +47,40 @@ Steps:
 1. Navigate to folder 636S12023_WebApp
 
 2. Create virtual environment using the following commands
-        py -3 -m venv .venv
-        .venv\\Scripts\\activate or navigate to .venv folder and run Scripts\\activate
+        `py -3 -m venv .venv`
+        `.venv\\Scripts\\activate` or navigate to .venv folder and run `Scripts\\activate`
 3. Install the packages
         navigate to the main folder 636S12023_WebApp, and run the following command
-        pip install -r requirements.txt
+        `pip install -r requirements.txt`
 
 4. Use the virtualenv as python interpreter (otherwise not able to pick up the packages installed inside this virtualenv)
 
 5. Navigate to folder librarywebapp (where app.py is located), and run the following commands
-        flask run
-        Webapp running on http://127.0.0.1:5000
+        `flask run`
+        Web app running on http://127.0.0.1:5000
 
 ---
 
 ## Error Encountered
 
-1. Virtual envrionment cannot be activated
+- Virtual envrionment cannot be activated
 Error messages: Scripts\Activate.ps1 cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
 Solution: 
 https://www.sharepointdiary.com/2014/03/fix-for-powershell-script-cannot-be-loaded-because-running-scripts-is-disabled-on-this-system.html
+
+---
+
+## Contributing
+
+Please contact the author on how to contribute to the project.
+
+---
+
+## Acknowledgments
+
+List of people or projects that inspired or helped you in the development of the project.
+- Stuart Charters
+- Computing tutor team (Sharon Long, Craig, Nathan, and Simon)
 
 ---
 
@@ -76,7 +90,7 @@ This project report consists of two sections. The first section focuses on discu
 
 ### Structure of Routes and Functions 
 
-The web application consists of multiple routes that handle different operations such as adding books, members, and branches, managing book loans, and displaying relevant information to the users. The templates are linked to the routes, and the necessary data is passed between them using Flask.
+The web application consists of multiple routes that handle different operations, such as adding books, members, and branches, managing book loans, and displaying relevant information to the users. The templates are linked to the routes, and the necessary data is passed between them using Flask.
 
 The main routes are:
 
@@ -123,18 +137,27 @@ Please refer to the following page template hiarachy:
 
 #### I followed assumptions and requirements below:
 
-1. The books are identified by their book copy id, which is assumed to be unique for each book. 
-2. Physical copies: Hardcover, Paperback, Illustrated; Digital copies: eBooks, Audio Books.
-3. Users cannot add a loan for a non-digital copy when another borrower still has that copy.
-4. Members are identified by their library card number (borrower id), which is assumed to be unique for each member.
-5. Users can add a loan for a digital copy any time (regardless of whether it is marked as returned or not returned).
-6. All loans have a due date, and can be 'returned', regardless of copy format.
-7. Non-admin users won’t be accessing “/staff” page and admin/staff know how to access this page.
+   Book related:
+   - The books are identified by their book copy id, which is assumed to be unique for each book. 
+   - Physical copies: Hardcover, Paperback, Illustrated; Digital copies: eBooks, Audio Books.
+
+   Borrower related:
+   - Members are identified by their library card number (borrower id), which is assumed to be unique for each member.
+
+   Loan related:
+   - Users cannot add a loan for a non-digital copy when another borrower still has that copy.
+   - Users can add a loan for a digital copy any time (regardless of whether it is marked as returned or not returned).
+   - Users can add different loans for a same book (but different book copy) at any time.
+   - All loans have a due date, and can be 'returned', regardless of copy format.
+
+   Users/Staff
+   - Non-admin users won’t be accessing the “/staff” page and admin/staff know how to access this page.
 
 #### I made design decisions below:
 
-1. Page templates are shared and used between public and staff. For instance, `publicbooksearch.html` and `staffbooksearch.html` share the same template `basebooksearch.html`. Because those pages are basically the same and the navigation panel is the only difference, it increases reusability of code using a template. Similar decisions have been made in borrower search and edit pages, etc. 
-2. If a page might both GET or POST method, I use the same page to display both actions. Examples like book search page `publicbooksearch.html` and member search page `staffborrowersearch.html`. This is because even with different GET or POST method, they are basically displaying the same content with not much difference. GET method retrives all records in the database, while the POST method does a search and retrives the matched records in the database.
+1. In order to increase code reusability and simplify maintenance, the same page templates are utilized for both public and staff pages. This is achieved by utilizing a common base template for pages with similar functionality, such as `basebooksearch.html` for `publicbooksearch.html` and `staffbooksearch.html`. The only distinction between these pages is the navigation panel, making it easy to maintain and update the code. This approach has been applied to other pages as well, such as borrower search and edit pages.
+
+2. To streamline the user experience and simplify the codebase, pages that may receive either `GET` or `POST` method requests are handled using a single page. For instance, both book search page `publicbooksearch.html` and member search page `staffborrowersearch.html` utilize the same page to display results. This is because there is little difference between the content displayed, regardless of the request method used. The GET method retrieves all records in the database, while the POST method performs a search and returns only the matched records.
 
 ---
 

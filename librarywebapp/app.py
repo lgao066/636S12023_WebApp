@@ -56,13 +56,13 @@ sql_return_loan = '''update loans set returned = 1 where loanid = %s;'''
 sql_books_on_loan = '''SELECT loans.loanid, DATE_ADD(loans.loandate, INTERVAL 28 DAY) as "Due Date", 
                     if(loandate < DATE_ADD(CURDATE(), INTERVAL -35 DAY), "Yes", "No") as "Overdue",
                     br.firstname, br.familyname,
-                    loans.bookcopyid, books.booktitle, books.author, books.yearofpublication
+                    loans.bookcopyid, books.booktitle, books.author, books.yearofpublication, format
                     from loans 
                     inner join bookcopies on bookcopies.bookcopyid = loans.bookcopyid
                     inner join books on books.bookid = bookcopies.bookid
                     inner join borrowers br on loans.borrowerid = br.borrowerid
                     where (returned <> 1 or returned is NULL)
-                    order by loanid asc;'''
+                    order by br.firstname asc, br.familyname asc, loanid asc;'''
 
 sql_overdue_books = '''SELECT borrowers.borrowerid, borrowers.firstname As "First Name", 
                     borrowers.familyname As "Family Name", 
@@ -104,6 +104,7 @@ sql_books_all = '''SELECT booktitle, author, category, yearofpublication, descri
                     group by books.bookid;'''
 #endregion
 
+#region Support functions
 
 def listbooks(page = "publicbooklist.html"):
     connection = getCursor()
@@ -153,9 +154,11 @@ def listeditoraddborrowers(page = "staffborrowersearch.html", message = ""):
 def convert_to_string_stripped(ele):
     return "" if (ele is None or ele == None) else ele.strip()
 
+#endregion
+
 #region App routing
 
-# Main pages
+# Main Home Page
 @app.route("/")
 def public_home():
     return render_template("publicbase.html")
@@ -164,7 +167,7 @@ def public_home():
 def staff_home():
     return render_template("staffbase.html")
 
-# Search pages
+# Book Search
 @app.route("/staff/search")
 @app.route("/staff/search", methods=["POST"])
 def staff_searchbooks():
@@ -175,7 +178,7 @@ def staff_searchbooks():
 def public_searchbooks():
     return searchbooks()
 
-# Book list pages
+# Book List
 @app.route("/staff/listbooks")
 def staff_listbooks():
     return listbooks("staffbooklist.html")
@@ -184,12 +187,13 @@ def staff_listbooks():
 def public_listbooks():
     return listbooks()
 
-# Borrower pages
+# Borrower List
 @app.route("/staff/listborrowers")
 @app.route("/staff/listborrowers", methods=["POST"])
 def searchborrowers():
     return listborrowers()
 
+# Borrower Edit and Add
 @app.route("/staff/editborrowers")
 def vieweditborrowers():
     return listborrowers("staffeditborrower.html")
@@ -200,6 +204,7 @@ def viewaddborrowers():
 
 @app.route("/staff/editborrowers", methods=["POST"])
 def editborrowers():
+    # Get web elements value
     borrowerid = convert_to_string_stripped(request.form.get('borrowerid'))
     firstname = convert_to_string_stripped(request.form.get('firstname'))
     lastname = convert_to_string_stripped(request.form.get('lastname'))
@@ -210,6 +215,7 @@ def editborrowers():
     city = convert_to_string_stripped(request.form.get('city'))
     postcode = convert_to_string_stripped(request.form.get('postcode'))
 
+    # Convert web elements value into a dict
     borrowerdict = {
         "firstname": firstname,
         "familyname": lastname,
@@ -243,6 +249,7 @@ def editborrowers():
 
 @app.route("/staff/addborrowers", methods=["POST"])
 def addborrowers():
+    # Get web elements value
     firstname = convert_to_string_stripped(request.form.get('firstname'))
     lastname = convert_to_string_stripped(request.form.get('lastname'))
     dob = convert_to_string_stripped(request.form.get('dob'))
@@ -268,6 +275,7 @@ def loanbook():
 
 @app.route("/staff/loan/add", methods=["POST"])
 def addloan():
+    # Get web elements value
     borrowerid = request.form.get('borrower')
     bookid = request.form.get('book')
     loandate = request.form.get('loandate')
@@ -275,7 +283,7 @@ def addloan():
     cur.execute(sql_update_loan,(bookid, borrowerid, str(loandate),))
     return redirect("/staff/currentloans")
 
-# Return a book page
+# Return a book
 @app.route("/staff/returnbook")
 def returnbook():
     connection = getCursor()

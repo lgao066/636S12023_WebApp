@@ -16,17 +16,17 @@ Return books -
 <form id="survey" name="survey" action="/staff/loan/return" method="post">
 
     <!-- Table of available books or selected book -->
-    <table id="loantable" style="width:70%; border: 1px solid black;" class ="table table-striped table-hover">
+    <table id="loantable" style="width:90%; border: 1px solid black;" class ="table table-striped table-hover">
         <thead style="background-color: #96D4D4;">
             <tr style="color:rgb(12, 0, 0)">
                 <th scope="col">Loan ID</th>
                 <th scope="col">Due Date</th>
                 <th scope="col">Overdue</th>
                 <th scope="col">Names</th>
-                <th scope="col">Book Copy ID</th>
                 <th scope="col">Title</th>
                 <th scope="col">Author</th>
                 <th scope="col">Year</th>
+                <th scope="col">Format</th>
             </tr>
         </thead>
         <tbody>
@@ -36,10 +36,10 @@ Return books -
                 <td>{{loan[1]}}</td>
                 <td>{{loan[2]}}</td>
                 <td>{{loan[3] + " " + loan[4]}}</td>
-                <td>{{loan[5]}}</td>
                 <td>{{loan[6]}}</td>
                 <td>{{loan[7]}}</td>
                 <td>{{loan[8]}}</td>
+                <td>{{loan[9]}}</td>
             </tr>
         {% endfor %}
         </tbody>
