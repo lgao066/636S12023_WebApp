@@ -4,6 +4,15 @@
 
 This project is created for COMP636 Summer School 2022 Web Application Final Assessment.
 
+---
+
+## Library Websites
+
+- Public access - http://ligao2022.pythonanywhere.com/
+- Staff access - http://ligao2022.pythonanywhere.com/staff
+
+---
+
 ## Introduction
 The web-based library management system is a platform for managing books and members for multiple library branches. The system is built using Python, Flask, Bootstrap CSS, and MySQL. This project is created for a small community library and has only two interfaces:
 
@@ -17,13 +26,6 @@ The web-based library management system is a platform for managing books and mem
 - Author: Li Gao
 - Student ID: 1155084
 - Email: Li.Gao@lincolnuni.ac.nz
-
----
-
-## Demo Sites
-
-- Public access - http://ligao2022.pythonanywhere.com/
-- Staff access - http://ligao2022.pythonanywhere.com/staff
 
 ---
 

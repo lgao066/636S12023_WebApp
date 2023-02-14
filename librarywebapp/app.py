@@ -33,14 +33,14 @@ avaiable_books_for_borrow = '''SELECT * FROM bookcopies
                                                             );'''
 
 search_avaiable_books = '''SELECT bookcopies.bookcopyid, books.booktitle, books.author, format, 
-                            IF(min(returned)=1, "Available", "On Loan")  AS returned, 
+                            IF((min(returned)=1 or isnull(returned)), "Available", "On Loan")  AS returned, 
                             DATE_ADD(max(loandate), INTERVAL 28 DAY)  AS duedate
                             FROM bookcopies
                             inner join books on books.bookid = bookcopies.bookid
                             left join loans on bookcopies.bookcopyid = loans.bookcopyid
                             group by bookcopies.bookcopyid
                             having books.booktitle like %s and books.author like %s
-                            order by books.booktitle asc;'''
+                            order by books.booktitle asc, bookcopies.bookcopyid asc;'''
 
 search_available_borrowers = '''SELECT * FROM borrowers where firstname like %s and familyname like %s and %s;'''
 
