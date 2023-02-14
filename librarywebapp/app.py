@@ -179,11 +179,11 @@ def public_searchbooks():
     return searchbooks()
 
 # Book List
-@app.route("/staff/bookslist")
+@app.route("/staff/booklist")
 def staff_listbooks():
     return listbooks("staffbooklist.html")
 
-@app.route("/bookslist")
+@app.route("/booklist")
 def public_listbooks():
     return listbooks()
 
