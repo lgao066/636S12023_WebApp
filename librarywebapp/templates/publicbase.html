@@ -16,3 +16,7 @@ Public Portal -
     </ul>  
 </li>
 {% endblock %}
+
+{% block portal %}
+    <a href="{{ url_for('public_home') }}">Public</a>
+{% endblock %}

@@ -15,17 +15,17 @@ Add Borrower -
     <div class="row" style = "border: 1px solid SlateBlue; background-color: rgb(255, 246, 205);">
         <fieldset style="float: left; margin: 5px 0px 5px 2%; width: 25%;">
             <div class="form-group">
-                <label for="firstname" style="color:SlateBlue;">First Name:</label>
+                <label for="firstname" style="color:SlateBlue;">First Name:<span class="required">*</span></label>
                 <input type="text" class="form-control" id="firstname" placeholder="Enter first name(s)" name="firstname" style="width:90%" value="{{firstname}}" onblur="validateTextfield('firstname', 45)">
             </div>
             <div class="form-group">
-                <label for="lastname" style="color:SlateBlue;">Last Name:</label>
+                <label for="lastname" style="color:SlateBlue;">Last Name:<span class="required">*</span></label>
                 <input type="text" class="form-control" id="lastname" placeholder="Enter last name" name="lastname" style="width:90%" value="{{lastname}}" onblur="validateTextfield('lastname', 45)">
             </div>
         </fieldset>
         <fieldset style="float: left; margin: 5px 0px 5px; width: 25%;">
             <div class="form-group">
-                <label for="dob" style="color:SlateBlue;">Date of Birth:</label>
+                <label for="dob" style="color:SlateBlue;">Date of Birth:<span class="required">*</span></label>
                 <input type="date" class="form-control" id="dob" placeholder="Enter date of birth" name="dob" style="width:90%" value="{{dob}}" onblur="validateDate()">
             </div>
             <div class="form-group">
@@ -78,12 +78,29 @@ Add Borrower -
     const postcode = document.querySelector('#postcode')
 
     function validateDate() {
-        let today = new Date();
-        let enteredDate = new Date(dob.value);
-        if (enteredDate > today) {
-            alert("Date of birth cannot be in the future");
-            dob.value = "";
-        }
+    // Check if date is valid
+    var date = new Date(dob.value);
+    if (isNaN(date.getTime())) {
+        alert("Invalid date time entered!");
+        return false;
+    }
+
+    // Check if date is in the future
+    var today = new Date();
+    if (date.getTime() > today.getTime()) {
+        alert("Date of birth cannot be in the future!");
+        return false;
+    }
+
+    // Check if date is before 1900
+    var earliestDate = new Date('1900-01-01');
+    if (date.getTime() < earliestDate.getTime()) {
+        alert("Date of birth cannot be earlier than 1900!");
+        return false;
+    }
+
+    // If all checks pass, return true
+    return true;
     }
 
     function validateTextfield(id, length) {
@@ -104,7 +121,7 @@ Add Borrower -
     btn.onclick = (event) => { 
         if(firstname.value == "" || lastname.value == "" || dob.value == ""){
             event.preventDefault();
-            alert("Please enter firstname, lastname and date of birth for the new borrower");
+            alert("Please enter firstname, lastname and date of birth for the new borrower!");
         }
         else
         {

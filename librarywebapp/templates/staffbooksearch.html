@@ -12,7 +12,7 @@
     </ul>  
 </li>
 <li>
-    <a>Borrowers</a>
+    <a>Borrower</a>
     <ul>
         <a href="{{ url_for('searchborrowers') }}">Search</a>
         <a href="{{ url_for('viewaddborrowers') }}">Add</a>
@@ -22,16 +22,16 @@
 <li>
     <a>Loan</a>
     <ul>
-        <a href="{{ url_for('loanbook') }}">Loan Books</a>
-        <a href="{{ url_for('returnbook') }}">Return Books</a>
+        <a href="{{ url_for('loanbook') }}">Borrow</a>
+        <a href="{{ url_for('returnbook') }}">Return</a>
     </ul>  
 </li>
 <li>
     <a>Report</a>
     <ul>
-        <a href="{{ url_for('overduesummary') }}">Overdue Summary</a>
-        <a href="{{ url_for('loansummary') }}">Loan Summary</a>
-        <a href="{{ url_for('currentloans') }}">Borrower Summary</a>
+        <a href="{{ url_for('overduesummary') }}">Overdue</a>
+        <a href="{{ url_for('loansummary') }}">Loan</a>
+        <a href="{{ url_for('currentloans') }}">Borrower</a>
     </ul>  
 </li>
 {% endblock %}

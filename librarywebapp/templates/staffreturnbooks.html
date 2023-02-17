@@ -44,7 +44,7 @@ Return books -
         {% endfor %}
         </tbody>
     </table>
-    <label for="loanid">Loan ID: </label>    
+    <label for="loanid">Loan ID: <span class="required">*</span></label>    
     <input type="text" name="loanid" id="loanid" style="width: 300px;" placeholder="Please enter a loan Id in the above table"/>
     <!-- URL for submission (action) of form should be /staff/loan/return -->
     <button id="btn" style="font-size: 18px; padding: 2px; background: rgb(19, 83, 156); color: white">Return the book</button>

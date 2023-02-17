@@ -80,7 +80,7 @@ sql_most_loaned_books = '''SELECT b.booktitle as Title, b.author as Author, b.ca
                     INNER JOIN bookcopies ON loans.bookcopyid = bookcopies.bookcopyid
                     RIGHT JOIN books b ON b.bookid = bookcopies.bookid
                     group by b.bookid
-                    ORDER BY count(loans.loanid) desc;'''
+                    ORDER BY count(loans.loanid) desc, b.booktitle asc;'''
 
 sql_borrower_summary_in_detail = '''select br.borrowerid, br.firstname, br.familyname,  
                                     l.borrowerid, l.bookcopyid, l.loandate, l.returned, b.bookid, b.booktitle, b.author, 
@@ -315,7 +315,7 @@ def loansummary():
     return render_template("staffloansummary.html", loansummary = loansummary)
 
 # Display a Borrower Summary
-@app.route("/staff/currentloans")
+@app.route("/staff/borrowersummary")
 def currentloans():
     connection = getCursor()
     connection.execute(sql_borrower_summary_in_detail)

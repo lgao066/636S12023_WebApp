@@ -13,6 +13,10 @@
 </li>
 {% endblock %}
 
+{% block portal %}
+    <a href="{{ url_for('public_home') }}">Public</a>
+{% endblock %}
+
 {% block postcontent %}
 action="/search"
 {% endblock %}
